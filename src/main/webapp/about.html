@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Web Math Indexer and Searcher help</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link type="text/css" rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div align="right">
+            <a href="index.jsp" >WebMIaS</a>
+            <a href="examples.xhtml" >Examples</a>
+            <a href="about.html" >About</a>
+            <a href="about.html#help" >Help</a>
+            <a href="about.html#contact" >Contact</a>
+        </div>
+        <div align="center">
+            <a href="index.jsp"><img src="webmiaslogo.png" width="250" alt="WebMIaS" border="0" ></a>
+        </div>
+        <hr width="90%" size="2">
+        <div style="margin-left: 300px; margin-right: 300px">
+            <h3 id="about">About</h3>
+            <p align="justify">
+                WebMIaS is a web interface for Math Indexer and Searcher (MIaS) math aware searching engine.
+                It provides the ability to search scientific documents for mathematical formulae, in addition
+                to standard textual words. It is based on
+                fulltext search engine <a href="http://lucene.apache.org/">Apache Lucene</a>. MIaS uses several
+                unification algorithms to be able to search for equal formulae with a certain degree of different
+                notation. It also allows one to search for subformulae.
+                MIaS is able to search for mathematical and textual content at the same time. By specifying one
+                or more text terms in mathematical query, the results can be effectively narrowed down. Of course,
+                you can search only for text.
+            </p>
+            <h3 id="help">Help on querying</h3>
+            <p align="justify">
+                There are two languages for inputting math supported &emdash; TeX and presentation MathML.
+                MathML notated queries must be written with no tag prefix. 
+                TeX mathematical queries must be enclosed in $ signs.
+                You can search for several formulae at the same time, just place one expression after another.
+                Mathematical queries are additionally canonicalized using our canonicalizer 
+                library to avoid any inconsistencies in the query.
+            </p>
+            <p align="justify">
+                MIaS allows you to search for textual content as well. If you would like to search 
+                for mathematics and text at the same
+                time, place the text queries into the appropriate facets, either title or content.
+            </p>
+            <p>Number of results is currently limited to 10,000.</p>
+            <h4>Example</h4>
+            <p>
+                You can find examples on the <a href="examples.xhtml">example</a> page.
+            </p>
+            <h3 id="contact">Contact</h3>
+            <p align="justify">
+                If you have any questions, comments, suggestions etc. please let us know at
+                webmias@fi.muni.cz.
+            </p>
+        </div>
+        <hr width="90%" size="2">
+        <div align="center"><a href="about.html">back to top</a></div>
+    </body>
+</html>

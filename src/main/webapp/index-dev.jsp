@@ -23,7 +23,7 @@
             </div>
             <div id="main-container">
                 <a id="logo" href="ps?n=-1"></a>
-                <form action="${pageContext.request.contextPath}/ps" method="get"
+                <form action="${pageContext.request.contextPath}/ps" method="post"
                       onsubmit="return checkForm(this)">
                     <div>
                         <textarea id="mathQuery" name="query" rows="8" class="full-width"><c:out value="${query}"/></textarea>

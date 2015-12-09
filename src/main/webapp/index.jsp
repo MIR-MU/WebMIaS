@@ -31,7 +31,7 @@ import="cz.muni.fi.webmias.Indexes"
                    </c:url>">
                 </a>
 
-                <form action="${pageContext.request.contextPath}/ps" method="get"
+                <form action="${pageContext.request.contextPath}/ps" method="post"
                       onsubmit="buildQuery();
                               return checkForm(this)">
                     <div class="query-clauses">

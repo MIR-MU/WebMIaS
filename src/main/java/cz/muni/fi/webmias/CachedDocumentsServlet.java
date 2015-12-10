@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -64,7 +63,7 @@ public class CachedDocumentsServlet extends HttpServlet {
         DataInputStream in = new DataInputStream(inputStreamFromDataPath);
         
         int length;
-        while ((in != null) && ((length = in.read(byteBuffer)) != -1)) {
+        while ((length = in.read(byteBuffer)) != -1) {
             outStream.write(byteBuffer,0,length);
         }
         

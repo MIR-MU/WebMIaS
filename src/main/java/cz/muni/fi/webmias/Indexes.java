@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.FSDirectory;
 
@@ -17,8 +17,8 @@ import org.apache.lucene.store.FSDirectory;
  */
 public class Indexes {
 
-    private static List<IndexDef> indexes = new ArrayList<IndexDef>();
-    private static char dirSep = System.getProperty("file.separator").charAt(0);
+    private static final List<IndexDef> indexes = new ArrayList<>();
+    private static final char dirSep = System.getProperty("file.separator").charAt(0);
     
     
     static {
@@ -30,7 +30,7 @@ public class Indexes {
             String[] storageArray = prop.getProperty("STORAGES").split(",");
             for (int i = 0; i < indexesNames.length; i++) {
                 String name = indexesNames[i];
-                IndexSearcher is = new IndexSearcher(IndexReader.open(FSDirectory.open(new File(indexesPaths[i]))));
+                IndexSearcher is = new IndexSearcher(DirectoryReader.open(FSDirectory.open(new File(indexesPaths[i]))));
                 String storage = storageArray[i];
                 int sl = storage.length();
                 if (storage.charAt(sl - 1) != dirSep) {

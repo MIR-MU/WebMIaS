@@ -38,7 +38,8 @@ public class SearchResource {
         String[] sep = MathSeparator.separate(query, "");
         String convertedQuery = sep[1];
         if (sep[0] != null && !sep[0].isEmpty()) {
-            convertedQuery += " " + TeXConverter.convertTexLatexML(sep[0]);
+//            convertedQuery += " " + TeXConverter.convertTexLatexML(sep[0]);
+            convertedQuery += " " + sep[0];
         }
         Results r = new Results();
         

@@ -13,6 +13,7 @@ import cz.muni.fi.mias.search.Result;
 import cz.muni.fi.mias.search.SearchResult;
 import cz.muni.fi.mir.mathmlcanonicalization.MathMLCanonicalizer;
 import cz.muni.fi.mir.mathmlcanonicalization.modules.ModuleException;
+import cz.muni.fi.mir.mathmlunificator.MathMLUnificator;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -107,7 +108,9 @@ public class ProcessServlet extends HttpServlet {
                 ByteArrayOutputStream canonOut = new ByteArrayOutputStream();
                 MathMLCanonicalizer canonicalizer = MathMLCanonicalizer.getDefaultCanonicalizer();
                 canonicalizer.canonicalize(new ByteArrayInputStream(("<html>" + query + "</html>").getBytes("UTF-8")), canonOut);
-                convertedQuery = canonOut.toString("UTF-8");
+                ByteArrayOutputStream unificationOut = new ByteArrayOutputStream();
+                MathMLUnificator.unifyMathML(new ByteArrayInputStream(canonOut.toByteArray()), unificationOut);
+                convertedQuery = unificationOut.toString("UTF-8");
                 convertedQuery = convertedQuery.substring(convertedQuery.indexOf("<html>")+6, convertedQuery.indexOf("</html>"));
                 request.setAttribute("convertedCanonQuery", convertedQuery);
             } catch (XMLStreamException ex) {

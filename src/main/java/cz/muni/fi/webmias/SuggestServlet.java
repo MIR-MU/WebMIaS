@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 MIR@MU Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cz.muni.fi.webmias;
 
 import com.google.gson.Gson;
@@ -12,16 +27,16 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet for instant TeX to MathML conversion requests
- * 
+ *
  * @author Martin Liska
  */
 public class SuggestServlet extends HttpServlet {
-    
+
     private Suggester suggester;
-    
+
+    @Override
     public void init() {
         suggester = new MathNamesSuggester();
-//        suggester = new TitlesSuggester(Indexes.getSearcher(0).getIndexReader());
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -32,23 +47,21 @@ public class SuggestServlet extends HttpServlet {
         query = query.replaceAll("\\$\\$", "\\$");
         String[] split = query.split("\\$");
         StringBuilder textQuery = new StringBuilder();
-        for (int i = 0; i < split.length; i++ ) {
-            if (i%2==0) {
+        for (int i = 0; i < split.length; i++) {
+            if (i % 2 == 0) {
                 if (!split[i].trim().isEmpty()) {
                     textQuery.append(split[i]).append(" ");
                 }
             }
         }
-        query = textQuery.substring(0, textQuery.length()-1);
+        query = textQuery.substring(0, textQuery.length() - 1);
         List<String> suggest = suggester.suggest(query);
-//        System.out.println(suggest);
         response.getWriter().write(new Gson().toJson(suggest));
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -62,8 +75,7 @@ public class SuggestServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

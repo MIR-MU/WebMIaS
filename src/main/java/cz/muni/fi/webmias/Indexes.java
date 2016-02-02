@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016 MIR@MU Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cz.muni.fi.webmias;
 
 import cz.muni.fi.mias.Settings;
@@ -12,15 +27,14 @@ import org.apache.lucene.store.FSDirectory;
 
 /**
  * Class responsible for loading indexes from indexes.properties file
- * 
+ *
  * @author Martin Liska
  */
 public class Indexes {
 
     private static final List<IndexDef> indexes = new ArrayList<>();
     private static final char dirSep = System.getProperty("file.separator").charAt(0);
-    
-    
+
     static {
         try {
             Properties prop = new Properties();
@@ -36,7 +50,7 @@ public class Indexes {
                 if (storage.charAt(sl - 1) != dirSep) {
                     storage = storage + dirSep;
                 }
-                
+
                 IndexDef indexDef = new IndexDef(name, storage, is);
                 indexes.add(indexDef);
             }
@@ -46,21 +60,21 @@ public class Indexes {
             ex.printStackTrace();
         }
     }
-    
+
     public Indexes() {
     }
-    
+
     public static IndexDef getIndexDef(int i) {
         return indexes.get(i);
     }
-    
+
     public static String[] getIndexNames() {
         String[] result = new String[indexes.size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = indexes.get(i).getName();
         }
-        
+
         return result;
     }
-    
+
 }

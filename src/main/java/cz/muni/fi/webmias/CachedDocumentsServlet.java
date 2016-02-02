@@ -1,9 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2016 MIR@MU Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-
 package cz.muni.fi.webmias;
 
 import cz.muni.fi.mias.search.Searching;
@@ -25,11 +34,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author mato
+ * @author Martin Liska
  */
 public class CachedDocumentsServlet extends HttpServlet {
-    
+
     private static final int BUFSIZE = 4096;
 
     /**
@@ -43,34 +51,34 @@ public class CachedDocumentsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String localPath = request.getParameter("path");
         String indexNumber = request.getParameter("index");
         IndexDef indexDef = Indexes.getIndexDef(Integer.valueOf(indexNumber));
         String storage = indexDef.getStorage();
-        
-        String fullPath = storage+localPath;
+
+        String fullPath = storage + localPath;
         InputStream inputStreamFromDataPath = getInputStreamFromDataPath(fullPath);
         String fileName = getFileName(localPath);
-        
-        ServletOutputStream outStream = response.getOutputStream();
-        String mimetype = "application/octet-stream";
-        
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        response.setContentType(mimetype);
-        
-        byte[] byteBuffer = new byte[BUFSIZE];
-        DataInputStream in = new DataInputStream(inputStreamFromDataPath);
-        
-        int length;
-        while ((length = in.read(byteBuffer)) != -1) {
-            outStream.write(byteBuffer,0,length);
+
+        try (ServletOutputStream outStream = response.getOutputStream()) {
+            String mimetype = "application/octet-stream";
+
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+            response.setContentType(mimetype);
+
+            byte[] byteBuffer = new byte[BUFSIZE];
+            DataInputStream in = new DataInputStream(inputStreamFromDataPath);
+
+            int length;
+            while ((length = in.read(byteBuffer)) != -1) {
+                outStream.write(byteBuffer, 0, length);
+            }
+
+            in.close();
         }
-        
-        in.close();
-        outStream.close();
     }
-    
+
     private InputStream getInputStreamFromDataPath(String dataPath) {
 
         InputStream is = null;
@@ -144,17 +152,17 @@ public class CachedDocumentsServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private String getZipPath(String dataPath) {        
+    private String getZipPath(String dataPath) {
         return dataPath.substring(0, dataPath.indexOf(".zip") + 4);
     }
-    
-    private String getZipFilePath(String dataPath) {        
+
+    private String getZipFilePath(String dataPath) {
         return dataPath.substring(dataPath.indexOf(".zip") + 5);
     }
 
     private String getFileName(String localPath) {
         return localPath.substring(localPath.lastIndexOf(File.separator) + 1);
-        
+
     }
 
 }

@@ -1,6 +1,17 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2016 MIR@MU Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package cz.muni.fi.webmias;
 
@@ -19,6 +30,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,11 +48,10 @@ import org.apache.lucene.search.IndexSearcher;
 import org.jdom2.JDOMException;
 
 /**
- *
- * @author Mato
+ * @author Martin Liska
  */
 public class ProcessServlet extends HttpServlet {
-    
+
     private static final Logger LOG = Logger.getLogger(ProcessServlet.class.getName());
 
     private final int resPerPage = 20;
@@ -53,7 +64,7 @@ public class ProcessServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         queryLog = new File(config.getInitParameter("querylog"));
     }
-    
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,8 +73,11 @@ public class ProcessServlet extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -72,19 +86,19 @@ public class ProcessServlet extends HttpServlet {
         response.setCharacterEncoding("utf-8");
 
         HttpSession session = request.getSession(true);
-        
+
         int page = Integer.parseInt(request.getParameter("n"));
         String query = request.getParameter(QUERY_PARAMETER);
-        boolean debug = request.getParameter("debug")!=null;
+        boolean debug = request.getParameter("debug") != null;
         String indexNo = request.getParameter("index");
         int indexNumber = 0;
-        if (indexNo!=null) {
-             indexNumber = Integer.parseInt(indexNo);
+        if (indexNo != null) {
+            indexNumber = Integer.parseInt(indexNo);
         }
         String qc = request.getParameter("qc");
         String variant = request.getParameter("variant");
         MathMLType mmlType = getType(variant);
-        
+
         IndexDef currentIndexDef = Indexes.getIndexDef(indexNumber);
         IndexSearcher searcher = currentIndexDef.getIndexSearcher();
         request.setAttribute("index", indexNumber);
@@ -93,15 +107,15 @@ public class ProcessServlet extends HttpServlet {
         request.setAttribute("qc", qc);
         request.setAttribute("variant", variant);
         request.setAttribute("forbidden", forbidden);
-        
+
         request.setAttribute("indexes", Indexes.getIndexNames());
 
         if (query != null && !query.isEmpty()) {
             logQuery(request, query);
             String[] sep = MathSeparator.separate(query, "");
             query = sep[1];
-            if (sep[0]!=null && !sep[0].isEmpty()) {
-                query += " "+TeXConverter.convertTexLatexML(sep[0]);
+            if (sep[0] != null && !sep[0].isEmpty()) {
+                query += " " + TeXConverter.convertTexLatexML(sep[0]);
             }
             String convertedQuery = query;
             try {
@@ -111,13 +125,9 @@ public class ProcessServlet extends HttpServlet {
                 ByteArrayOutputStream unificationOut = new ByteArrayOutputStream();
                 MathMLUnificator.unifyMathML(new ByteArrayInputStream(canonOut.toByteArray()), unificationOut, false);
                 convertedQuery = unificationOut.toString("UTF-8");
-                convertedQuery = convertedQuery.substring(convertedQuery.indexOf("<html>")+6, convertedQuery.indexOf("</html>"));
+                convertedQuery = convertedQuery.substring(convertedQuery.indexOf("<html>") + 6, convertedQuery.indexOf("</html>"));
                 request.setAttribute("convertedCanonQuery", convertedQuery);
-            } catch (XMLStreamException ex) {
-                Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ModuleException ex) {
-                Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (JDOMException ex) {
+            } catch (XMLStreamException | ModuleException | JDOMException ex) {
                 Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -131,16 +141,16 @@ public class ProcessServlet extends HttpServlet {
             request.setAttribute("totalTime", searchResult.getTotalSearchTime());
             totalResults = Math.min(totalResults, Settings.getMaxResults());
             if (totalResults > 0 && page >= 0) {
-                    List<Integer> pages = new ArrayList<Integer>();
-                    for (int i = 0; i < (totalResults / resPerPage) + 1; i++) {
-                        pages.add(i + 1);
-                    }
-                    request.setAttribute("pages", pages);
-                    request.setAttribute("n", page);
-                    for (Result r : searchResult.getResults()) {
-                        r.setInfo(r.getInfo().replaceAll("\n", "<br/>"));
-                    }
-                    request.setAttribute("results", searchResult.getResults());
+                List<Integer> pages = new ArrayList<>();
+                for (int i = 0; i < (totalResults / resPerPage) + 1; i++) {
+                    pages.add(i + 1);
+                }
+                request.setAttribute("pages", pages);
+                request.setAttribute("n", page);
+                for (Result r : searchResult.getResults()) {
+                    r.setInfo(r.getInfo().replaceAll("\n", "<br/>"));
+                }
+                request.setAttribute("results", searchResult.getResults());
             } else if (page == -1) {
                 session.invalidate();
             } else {
@@ -158,17 +168,17 @@ public class ProcessServlet extends HttpServlet {
         String logMessage = "Searching query from IP:" + request.getRemoteAddr() + ":\n" + query;
         LOG.log(Level.INFO, logMessage);
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriterWithEncoding(queryLog, "UTF-8", true));
-            String log = new Date().toString() + "\n" + logMessage + "\n\n";
-            out.write(log);
-            out.close();
+            try (BufferedWriter out = new BufferedWriter(new FileWriterWithEncoding(queryLog, StandardCharsets.UTF_8, true))) {
+                String log = new Date().toString() + "\n" + logMessage + "\n\n";
+                out.write(log);
+            }
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Cannot write to query logging file in " + queryLog.getAbsolutePath());
+            LOG.log(Level.SEVERE, "Cannot write to query logging file in {0}", queryLog.getAbsolutePath());
         }
     }
-    
+
     private MathTokenizer.MathMLType getType(String variant) {
-        if (variant == null) {            
+        if (variant == null) {
             return MathTokenizer.MathMLType.BOTH;
         }
         if (variant.equals("pmath")) {

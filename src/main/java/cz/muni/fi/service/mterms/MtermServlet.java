@@ -1,9 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2016 MIR@MU Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-
 package cz.muni.fi.service.mterms;
 
 import cz.muni.fi.mias.math.Formula;
@@ -23,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author mato
+ * @author Martin Liska
  */
 @WebServlet(name = "MtermServlet", urlPatterns = {"/mterms"})
 public class MtermServlet extends HttpServlet {
@@ -33,24 +42,23 @@ public class MtermServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
 
         String query = request.getParameter("mathml");
-        
-        List<MIaSTerm> result = new ArrayList<MIaSTerm>();
+
+        List<MIaSTerm> result = new ArrayList<>();
         String mathQuery = "<html>" + query + "</html>";
         MathTokenizer mt = new MathTokenizer(new StringReader(mathQuery), true, MathTokenizer.MathMLType.BOTH);
         Map<Integer, List<Formula>> forms = mt.getFormulae();
         for (int i = 0; i < forms.size(); i++) {
             List<Formula> flist = forms.get(i);
-            for (int j = 0; j < flist.size(); j++) {
-                Formula f = flist.get(j);
+            for (Formula f : flist) {
                 result.add(new MIaSTerm(Formula.nodeToString(f.getNode(), false, MathMLConf.getElementDictionary(), MathMLConf.getAttrDictionary(), MathMLConf.getIgnoreNode()), f.getWeight()));
             }
         }
         MIaSTermContainer fc = new MIaSTermContainer();
         fc.setForms(result);
-        
+
         StringWriter sw = new StringWriter();
         JsonMarshallHelper.marshall(fc, sw);
-        
+
         response.getWriter().write(sw.toString());
     }
 

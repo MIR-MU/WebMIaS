@@ -1,8 +1,27 @@
+/*
+ * Copyright 2016 MIR@MU Project.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cz.muni.fi.webmias;
 
 import cz.muni.fi.mias.MIaSUtils;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,20 +32,14 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthenticationException;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
@@ -39,21 +52,24 @@ import uk.ac.ed.ph.snuggletex.XMLStringOutputOptions;
 
 /**
  * Class providing TeX to MathML conversion.
- * 
+ *
  * @author Martin Liska
  */
 public class TeXConverter {
-    
+
     public static String PARSE_ERROR = "parse_error";
+    public static final String LATEX_TO_XHTML_CONVERSION_WS_URL = "https://mir.fi.muni.cz/cgi-bin/latex-to-mathml-via-latexml.cgi";
 
     /**
      * Converts TeX formula to MathML using LaTeXML through a web service.
-     * 
-     * @param query String containing one or more TeX formulae enclosed in $ or $$
-     * @return String containing formulae converted to MathML that replaced original TeX forms. 
-     * Non math tokens are connected at the end.
+     *
+     * @param query String containing one or more keywords and TeX formulae
+     * (formulae enclosed in $ or $$).
+     * @return String containing formulae converted to MathML that replaced
+     * original TeX forms. Non math tokens are connected at the end.
      */
     public static String convertTexLatexML(String query) {
+
         query = query.replaceAll("\\$\\$", "\\$");
         String[] split = query.split("\\$");
         String textTerms = "";
@@ -67,58 +83,51 @@ public class TeXConverter {
                 toConvert += " $" + split[i] + "$";
             }
         }
-        query = "\\input amstex\\documentclass[a4paper]{article}\\usepackage{amsmath}\\usepackage{amsbsy}\\usepackage{amstext}\\usepackage{amsxtra}\\usepackage{amsopn}\\begin{document}" + toConvert + "\\end{document}";
+
         try {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("https://mir.fi.muni.cz/cgi-bin/latex-converter.cgi");
-            Credentials credentials = new UsernamePasswordCredentials("liska", "eir0Aid0");
-            BasicScheme authScheme = new BasicScheme();
-            Header authHeader = authScheme.authenticate(credentials, httppost, null);
-            MultipartEntity reqEntity = new MultipartEntity();
-            reqEntity.addPart("code", new StringBody(query));
-            httppost.setEntity(reqEntity);
-            httppost.addHeader(authHeader);
+
+            HttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost(LATEX_TO_XHTML_CONVERSION_WS_URL);
+
+            // Request parameters and other properties.
+            List<NameValuePair> params = new ArrayList<>(1);
+            params.add(new BasicNameValuePair("code", toConvert));
+            httppost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
+
+            // Execute and get the response.
             HttpResponse response = httpclient.execute(httppost);
-            int status = response.getStatusLine().getStatusCode();
-            EntityUtils.consume(response.getEntity());
-            if (status == 200) {
-                HttpGet httpGet = new HttpGet("https://mir.fi.muni.cz/latex-converter-output/latexmlpost-output.xhtml");
-                httpGet.addHeader(authHeader);
-                response = httpclient.execute(httpGet);
+            if (response.getStatusLine().getStatusCode() == 200) {
                 HttpEntity resEntity = response.getEntity();
-                DocumentBuilder dBuilder = MIaSUtils.prepareDocumentBuilder();
-                org.w3c.dom.Document doc = dBuilder.parse(resEntity.getContent());
-                NodeList ps = doc.getElementsByTagName("p");
-                String convertedMath = "";
-                for (int k = 0; k < ps.getLength(); k++) {
-                    Node p = ps.item(k);
-                    NodeList pContents = p.getChildNodes();
-                    for (int j = 0; j < pContents.getLength(); j++) {
-                        Node pContent = pContents.item(j);
-                        if (pContent instanceof Text) {
-                            convertedMath += pContent.getNodeValue() + "\n";
-                        } else {
-                            TransformerFactory transFactory = TransformerFactory.newInstance();
-                            Transformer transformer = transFactory.newTransformer();
-                            StringWriter buffer = new StringWriter();
-                            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-                            transformer.transform(new DOMSource(pContent), new StreamResult(buffer));
-                            convertedMath += buffer.toString() + "\n";
+                if (resEntity != null) {
+                    try (InputStream responseContents = resEntity.getContent()) {
+                        DocumentBuilder dBuilder = MIaSUtils.prepareDocumentBuilder();
+                        org.w3c.dom.Document doc = dBuilder.parse(responseContents);
+                        NodeList ps = doc.getElementsByTagName("p");
+                        String convertedMath = "";
+                        for (int k = 0; k < ps.getLength(); k++) {
+                            Node p = ps.item(k);
+                            NodeList pContents = p.getChildNodes();
+                            for (int j = 0; j < pContents.getLength(); j++) {
+                                Node pContent = pContents.item(j);
+                                if (pContent instanceof Text) {
+                                    convertedMath += pContent.getNodeValue() + "\n";
+                                } else {
+                                    TransformerFactory transFactory = TransformerFactory.newInstance();
+                                    Transformer transformer = transFactory.newTransformer();
+                                    StringWriter buffer = new StringWriter();
+                                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                                    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+                                    transformer.transform(new DOMSource(pContent), new StreamResult(buffer));
+                                    convertedMath += buffer.toString() + "\n";
+                                }
+                            }
                         }
+                        return convertedMath + textTerms;
                     }
                 }
-                return convertedMath + textTerms;
             }
-        } catch (TransformerException ex) {
-            Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (AuthenticationException ex) {
-            Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+
+        } catch (TransformerException | SAXException | ParserConfigurationException | IOException ex) {
             Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -127,10 +136,11 @@ public class TeXConverter {
 
     /**
      * Converts TeX formula to MathML using SnuggleTeX library.
-     * 
-     * @param query String containing one or more TeX formulae enclosed in $ or $$
-     * @return String with TeX formulae replaced by their MathML representations. Positions of other tokens are retained.
-     * @throws IOException 
+     *
+     * @param query String containing one or more TeX formulae enclosed in $ or
+     * $$
+     * @return String with TeX formulae replaced by their MathML
+     * representations. Positions of other tokens are retained.
      */
     public static String convertTexSnuggle(String query) {
         try {

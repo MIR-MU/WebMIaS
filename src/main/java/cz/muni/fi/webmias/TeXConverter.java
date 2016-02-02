@@ -69,69 +69,55 @@ public class TeXConverter {
      * original TeX forms. Non math tokens are connected at the end.
      */
     public static String convertTexLatexML(String query) {
-
         query = query.replaceAll("\\$\\$", "\\$");
-        String[] split = query.split("\\$");
-        String textTerms = "";
-        String toConvert = "";
-        for (int i = 0; i < split.length; i++) {
-            if (i % 2 == 0) {
-                if (!split[i].trim().isEmpty()) {
-                    textTerms += " " + split[i];
-                }
-            } else {
-                toConvert += " $" + split[i] + "$";
-            }
-        }
+        if (query.matches(".*\\$.+\\$.*")) {
+            try {
+                HttpClient httpclient = HttpClients.createDefault();
+                HttpPost httppost = new HttpPost(LATEX_TO_XHTML_CONVERSION_WS_URL);
 
-        try {
+                // Request parameters and other properties.
+                List<NameValuePair> params = new ArrayList<>(1);
+                params.add(new BasicNameValuePair("code", query));
+                httppost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
 
-            HttpClient httpclient = HttpClients.createDefault();
-            HttpPost httppost = new HttpPost(LATEX_TO_XHTML_CONVERSION_WS_URL);
-
-            // Request parameters and other properties.
-            List<NameValuePair> params = new ArrayList<>(1);
-            params.add(new BasicNameValuePair("code", toConvert));
-            httppost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
-
-            // Execute and get the response.
-            HttpResponse response = httpclient.execute(httppost);
-            if (response.getStatusLine().getStatusCode() == 200) {
-                HttpEntity resEntity = response.getEntity();
-                if (resEntity != null) {
-                    try (InputStream responseContents = resEntity.getContent()) {
-                        DocumentBuilder dBuilder = MIaSUtils.prepareDocumentBuilder();
-                        org.w3c.dom.Document doc = dBuilder.parse(responseContents);
-                        NodeList ps = doc.getElementsByTagName("p");
-                        String convertedMath = "";
-                        for (int k = 0; k < ps.getLength(); k++) {
-                            Node p = ps.item(k);
-                            NodeList pContents = p.getChildNodes();
-                            for (int j = 0; j < pContents.getLength(); j++) {
-                                Node pContent = pContents.item(j);
-                                if (pContent instanceof Text) {
-                                    convertedMath += pContent.getNodeValue() + "\n";
-                                } else {
-                                    TransformerFactory transFactory = TransformerFactory.newInstance();
-                                    Transformer transformer = transFactory.newTransformer();
-                                    StringWriter buffer = new StringWriter();
-                                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                                    transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-                                    transformer.transform(new DOMSource(pContent), new StreamResult(buffer));
-                                    convertedMath += buffer.toString() + "\n";
+                // Execute and get the response.
+                HttpResponse response = httpclient.execute(httppost);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    HttpEntity resEntity = response.getEntity();
+                    if (resEntity != null) {
+                        try (InputStream responseContents = resEntity.getContent()) {
+                            DocumentBuilder dBuilder = MIaSUtils.prepareDocumentBuilder();
+                            org.w3c.dom.Document doc = dBuilder.parse(responseContents);
+                            NodeList ps = doc.getElementsByTagName("p");
+                            String convertedMath = "";
+                            for (int k = 0; k < ps.getLength(); k++) {
+                                Node p = ps.item(k);
+                                NodeList pContents = p.getChildNodes();
+                                for (int j = 0; j < pContents.getLength(); j++) {
+                                    Node pContent = pContents.item(j);
+                                    if (pContent instanceof Text) {
+                                        convertedMath += pContent.getNodeValue() + "\n";
+                                    } else {
+                                        TransformerFactory transFactory = TransformerFactory.newInstance();
+                                        Transformer transformer = transFactory.newTransformer();
+                                        StringWriter buffer = new StringWriter();
+                                        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                                        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+                                        transformer.transform(new DOMSource(pContent), new StreamResult(buffer));
+                                        convertedMath += buffer.toString() + "\n";
+                                    }
                                 }
                             }
+                            return convertedMath;
                         }
-                        return convertedMath + textTerms;
                     }
                 }
+
+            } catch (TransformerException | SAXException | ParserConfigurationException | IOException ex) {
+                Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        } catch (TransformerException | SAXException | ParserConfigurationException | IOException ex) {
-            Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return textTerms;
+        return query;
     }
 
     /**

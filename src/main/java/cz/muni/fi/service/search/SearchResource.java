@@ -16,14 +16,15 @@
 package cz.muni.fi.service.search;
 
 import cz.muni.fi.mias.math.MathSeparator;
-import cz.muni.fi.mias.search.Searching;
 import cz.muni.fi.mias.search.SearchResult;
+import cz.muni.fi.mias.search.Searching;
 import cz.muni.fi.webmias.IndexDef;
 import cz.muni.fi.webmias.Indexes;
+import cz.muni.fi.webmias.TeXConverter;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -48,12 +49,10 @@ public class SearchResource {
         if (limit > LIMIT || limit <= 0) {
             limit = LIMIT;
         }
-        System.out.println(query);
         String[] sep = MathSeparator.separate(query, "");
         String convertedQuery = sep[1];
         if (sep[0] != null && !sep[0].isEmpty()) {
-            //convertedQuery += " " + TeXConverter.convertTexLatexML(sep[0]);
-            convertedQuery += " " + sep[0];
+            convertedQuery += " " + TeXConverter.convertTexLatexML(sep[0]);
         }
         Results r = new Results();
 

@@ -64,6 +64,7 @@ public class MtermResource {
         List<MIaSTerm> result = new ArrayList<>();
         String mathQuery = "<html>" + query + "</html>";
         MathTokenizer mt = new MathTokenizer(new StringReader(mathQuery), true, MathTokenizer.MathMLType.BOTH);
+        mt.reset();
         Map<Integer, List<Formula>> forms = mt.getFormulae();
         for (int i = 0; i < forms.size(); i++) {
             List<Formula> flist = forms.get(i);

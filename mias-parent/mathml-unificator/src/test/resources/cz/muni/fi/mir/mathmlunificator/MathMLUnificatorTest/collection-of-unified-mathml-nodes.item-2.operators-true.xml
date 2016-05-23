@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<math xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+      uni:unification-level="2" uni:unification-max-level="4" xmlns="http://www.w3.org/1998/Math/MathML">
+    <msup>
+        <mi>◍</mi>
+        <mi>◍</mi>
+    </msup>
+    <mo>+</mo>
+    <mfrac>
+        <mi>◍</mi>
+        <mi>◍</mi>
+    </mfrac>
+</math>

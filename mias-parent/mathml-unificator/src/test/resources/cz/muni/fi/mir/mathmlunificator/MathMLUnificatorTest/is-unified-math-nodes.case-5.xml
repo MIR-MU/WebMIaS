@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<math
+    xmlns="http://www.w3.org/1998/Math/MathML"
+    xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+    uni:unification-level="3">
+    <mfrac>
+        <mrow>
+            <mi> x </mi>
+            <mo> + </mo>
+            <mi> y </mi>
+            <mo> + </mo>
+            <mi> z </mi>
+        </mrow>
+        <mrow>
+            <mi> x </mi>
+            <mo> + </mo>
+            <mi> z </mi>
+        </mrow>
+    </mfrac>
+</math>

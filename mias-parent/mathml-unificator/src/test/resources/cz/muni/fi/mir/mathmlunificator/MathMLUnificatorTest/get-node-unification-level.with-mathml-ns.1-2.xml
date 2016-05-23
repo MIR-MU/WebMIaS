@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mfrac xmlns="http://www.w3.org/1998/Math/MathML"
+       xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+       uni:unification-level="1" uni:unification-max-level="2">
+    <msqrt>
+        <mi>◍</mi>
+    </msqrt>
+    <mi>c</mi>
+</mfrac>

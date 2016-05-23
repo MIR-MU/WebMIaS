@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<some-document-root>
+    <some-element>
+        Text content.
+    </some-element>
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+
+        <msup>
+            <mi>a</mi>
+            <mn>2</mn>
+        </msup>
+        <mo>+</mo>
+        <mfrac>
+            <msqrt>
+                <mi>b</mi>
+            </msqrt>
+            <mi>c</mi>
+        </mfrac>
+
+    </math>
+
+    Another mixed text content.
+
+    <math>
+        <mfrac>
+            <mrow>
+                <mi> x </mi>
+                <mo> + </mo>
+                <mi> y </mi>
+                <mo> + </mo>
+                <mi> z </mi>
+            </mrow>
+            <mrow>
+                <mi> x </mi>
+
+                <mo> + </mo>
+                <mi> z </mi>
+            </mrow>
+        </mfrac>
+    </math>
+    
+    <math xmlns="http://www.w3.org/1998/Math/MathML">                                
+        <msup>                                                                       
+            <mi>a</mi>                                                               
+            <mn>2</mn>                                                               
+        </msup>                                                                      
+        <mo>+</mo>                                                                   
+        <mfrac>                                                                      
+            <msqrt>                                                                  
+                <mi>b</mi>                                                           
+            </msqrt>                                                                 
+            <mi>c</mi>                                                               
+        </mfrac>                                                                     
+    </math>
+
+    <another-element>
+        Text content.
+    </another-element>
+</some-document-root>

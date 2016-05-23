@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+   <ShortName>WebMIaS</ShortName>
+   <Description>WebMIaS searches mathematics in documents</Description>
+   <Tags>math MathML TeX</Tags>
+   <Contact>webmias@fi.muni.cz</Contact>
+   <Url type="application/xml"
+        template="http://aura.fi.muni.cz:8085/webmias/ws/search?query={searchTerms}&amp;offset={startIndex}&amp;limit={count}"/>
+   <Url type="text/html" 
+        template="http://aura.fi.muni.cz:8085/webmias/ps?query={searchTerms}&amp;n={startPage?}&amp;searchButton=Search"/>
+   <LongName>Web Math Indexer and Searcher</LongName>
+   <Image height="114" width="300" type="image/png">http://aura.fi.muni.cz:8085/webmias/webmiaslogo.png</Image>
+   <Query role="example" searchTerms="%3Cmath%3E%3Cmi%3EA%3C/mi%3E%3C/math%3E" />
+   <Developer>FI MU MIR team</Developer>
+   <Attribution>
+     Search data by arXMLiv
+   </Attribution>
+   <SyndicationRight>open</SyndicationRight>
+   <AdultContent>false</AdultContent>
+   <Language>en-us</Language>
+   <OutputEncoding>UTF-8</OutputEncoding>
+   <InputEncoding>UTF-8</InputEncoding>
+ </OpenSearchDescription>

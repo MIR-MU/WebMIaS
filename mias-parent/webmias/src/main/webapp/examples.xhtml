@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN plus MathML 2.0//EN" "http://www.w3c.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Web Math Indexer and Searcher examples</title>
+        <link type="text/css" rel="stylesheet" href="style.css" />        
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"/>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" />
+        <script type="text/javascript" src="examples.js"/>
+    </head>
+    <body>
+        <div align="right">
+            <a href="index.jsp" >WebMIaS</a>
+            <a href="examples.xhtml" >Examples</a>
+            <a href="about.html" >About</a>
+            <a href="about.html#help" >Help</a>
+            <a href="about.html#contact" >Contact</a>
+        </div>
+        <div align="center">
+            <a href="index.jsp"><img src="webmiaslogo.png" width="250" alt="WebMIaS" border="0"/></a>
+        </div>
+        <hr width="90%" size="2"/>
+        <div class="examples">
+            <h3 id="about">Examples</h3>
+            <p>Three example expressions and their MathML forms:</p>
+            <ul>
+                <li class="example"><font size="4"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mrow><mn>4</mn><mo>+</mo><mi>y</mi></mrow></msup></math></font>
+                    <code>&lt;math&gt;&lt;msup&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mrow&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/math&gt;</code>
+                    <span class="example-query-string"><![CDATA[ variant=pcmath&index=0&searchButton=Search&n=0&query=+<math><msup><mi>x<%2Fmi><mrow><mn>4<%2Fmn><mo>%2B<%2Fmo><mi>y<%2Fmi><%2Fmrow><%2Fmsup><%2Fmath>&qc=%5B%7B"field"%3A"math"%2C"value"%3A"<math><msup><mi>x<%2Fmi><mrow><mn>4<%2Fmn><mo>%2B<%2Fmo><mi>y<%2Fmi><%2Fmrow><%2Fmsup><%2Fmath>"%7D%2C%7B"field"%3A"operator"%2C"value"%3A"any"%7D%5D]]></span>
+                </li>
+                
+                <li class="example"><font size="4"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>1</mn><mo>+</mo><mfrac><mn>2</mn><mrow><mi>n</mi><mo>-</mo><mn>3</mn></mrow></mfrac></mrow></math></font>
+                    <code>&lt;math&gt;&lt;mrow&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;/math&gt;</code>
+                <span class="example-query-string"><![CDATA[ variant=pcmath&index=0&searchButton=Search&n=0&query=+<math+xmlns%3D"http%3A%2F%2Fwww.w3.org%2F1998%2FMath%2FMathML"><mrow><mn>1<%2Fmn><mo>%2B<%2Fmo><mfrac><mn>2<%2Fmn><mrow><mi>n<%2Fmi><mo>-<%2Fmo><mn>3<%2Fmn><%2Fmrow><%2Fmfrac><%2Fmrow><%2Fmath>&qc=%5B%7B"field"%3A"math"%2C"value"%3A"<math+xmlns%3D%5C"http%3A%2F%2Fwww.w3.org%2F1998%2FMath%2FMathML%5C"><mrow><mn>1<%2Fmn><mo>%2B<%2Fmo><mfrac><mn>2<%2Fmn><mrow><mi>n<%2Fmi><mo>-<%2Fmo><mn>3<%2Fmn><%2Fmrow><%2Fmfrac><%2Fmrow><%2Fmath>"%7D%2C%7B"field"%3A"operator"%2C"value"%3A"any"%7D%5D ]]></span>
+                </li>
+                <li class="example"><font size="4"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mi>n</mi></msub><mo>=</mo><mn>0</mn></mrow></math></font>
+                <code>&lt;math&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;</code>
+                <span class="example-query-string"><![CDATA[ variant=pcmath&index=0&searchButton=Search&n=0&query=+<math+xmlns%3D"http%3A%2F%2Fwww.w3.org%2F1998%2FMath%2FMathML"><mrow><msub><mi>f<%2Fmi><mi>n<%2Fmi><%2Fmsub><mo>%3D<%2Fmo><mn>0<%2Fmn><%2Fmrow><%2Fmath>&qc=%5B%7B"field"%3A"math"%2C"value"%3A"<math+xmlns%3D%5C"http%3A%2F%2Fwww.w3.org%2F1998%2FMath%2FMathML%5C"><mrow><msub><mi>f<%2Fmi><mi>n<%2Fmi><%2Fmsub><mo>%3D<%2Fmo><mn>0<%2Fmn><%2Fmrow><%2Fmath>"%7D%2C%7B"field"%3A"operator"%2C"value"%3A"any"%7D%5D ]]></span>
+                </li>
+            </ul>
+            <p>TeX input example:</p>
+            <ul>
+                <li class="example"><font size="4"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></math></font>
+                <code>$x^2+y^2$</code>
+                <span class="example-query-string"><![CDATA[ variant=pcmath&index=0&searchButton=Search&n=0&query=+%24x%5E2%2By%5E2%24&qc=%5B%7B"field"%3A"math"%2C"value"%3A"%24x%5E2%2By%5E2%24"%7D%2C%7B"field"%3A"operator"%2C"value"%3A"any"%7D%5D ]]></span>
+                </li>                
+            </ul>
+        </div>
+        <hr width="90%" size="2"/>
+        <div align="center"><a href="examples.xhtml">back to top</a></div>
+    </body>
+</html>

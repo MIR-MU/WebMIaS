@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+    <msup>
+        <mi>a</mi>
+        <mn>2</mn>
+    </msup>
+    <mo>+</mo>
+    <unified-math xmlns="http://mir.fi.muni.cz/mathml-unification/">
+        <mfrac xmlns="http://www.w3.org/1998/Math/MathML">
+            <msqrt>
+                <mi>b</mi>
+            </msqrt>
+            <mi>c</mi>
+        </mfrac>
+        <mfrac xmlns="http://www.w3.org/1998/Math/MathML"
+            xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+            uni:unification-level="1" uni:unification-max-level="2">
+            <msqrt>
+                <mi>◍</mi>
+            </msqrt>
+            <mi>c</mi>
+        </mfrac>
+        <mfrac xmlns="http://www.w3.org/1998/Math/MathML"
+            xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+            uni:unification-level="2" uni:unification-max-level="2">
+            <mi>◍</mi>
+            <mi>◍</mi>
+        </mfrac>
+    </unified-math>
+</math>

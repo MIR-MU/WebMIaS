@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<some-document-root>
+    <some-element>
+        Text content. </some-element>
+    <unified-math xmlns="http://mir.fi.muni.cz/mathml-unification/">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mi>a</mi>
+                <mn>2</mn>
+            </msup>
+            <mo>+</mo>
+            <mfrac>
+                <msqrt>
+                    <mi>b</mi>
+                </msqrt>
+                <mi>c</mi>
+            </mfrac>
+        </math>
+        <math xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+            uni:unification-level="1" uni:unification-max-level="3" xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mi>a</mi>
+                <mn>2</mn>
+            </msup>
+            <mo>+</mo>
+            <mfrac>
+                <msqrt>
+                    <mi>◍</mi>
+                </msqrt>
+                <mi>c</mi>
+            </mfrac>
+        </math>
+        <math xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+            uni:unification-level="2" uni:unification-max-level="3" xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mi>◍</mi>
+                <mi>◍</mi>
+            </msup>
+            <mo>+</mo>
+            <mfrac>
+                <mi>◍</mi>
+                <mi>◍</mi>
+            </mfrac>
+        </math>
+        <math xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+            uni:unification-level="3" uni:unification-max-level="3" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>◍</mi>
+            <mo>+</mo>
+            <mi>◍</mi>
+        </math>
+    </unified-math>Another mixed text content.<math>
+        <mfrac>
+            <mrow>
+                <mi> x </mi>
+                <mo> + </mo>
+                <mi> y </mi>
+                <mo> + </mo>
+                <mi> z </mi>
+            </mrow>
+            <mrow>
+                <mi> x </mi>
+                <mo> + </mo>
+                <mi> z </mi>
+            </mrow>
+        </mfrac>
+    </math>
+    <another-element> Text content. </another-element>
+</some-document-root>

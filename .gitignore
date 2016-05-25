@@ -1,7 +1,10 @@
 .idea
 *.iml
 
+/mias-parent/deployment/
 /mias-parent/mathml-canonicalizer/target/
 /mias-parent/mathml-unificator/target/
 /mias-parent/mias/target/
 /mias-parent/miasmath/target/
+/mias-parent/target/
+/mias-parent/webmias/target/

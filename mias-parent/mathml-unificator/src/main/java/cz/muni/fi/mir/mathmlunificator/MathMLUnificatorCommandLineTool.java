@@ -85,9 +85,7 @@ public class MathMLUnificatorCommandLineTool {
                 printHelp(options);
                 System.exit(0);
             }
-            if (line.hasOption('p')) {
-                operatorUnification = true;
-            }
+            operatorUnification = line.hasOption('p');
 
             final List<String> arguments = Arrays.asList(line.getArgs());
             if (arguments.size() > 0) {

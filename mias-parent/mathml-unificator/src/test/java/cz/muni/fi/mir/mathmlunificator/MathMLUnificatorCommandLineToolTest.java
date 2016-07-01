@@ -28,35 +28,85 @@ import org.junit.*;
 public class MathMLUnificatorCommandLineToolTest extends AbstractXMLTransformationTest {
 
     @Test
-    public void testMain() throws Exception {
+    public void testMain_multiple_formulae_non_operators() throws Exception {
 
         String testFile = "multiple-formulae";
 
-        String[] argvNonOperators = {getTestResourceAsFilepath(testFile + ".input.xml")};
-        String[] argvOperators = {"-p", getTestResourceAsFilepath(testFile + ".input.xml")};
+        String[] argv = {getTestResourceAsFilepath(testFile + ".input.xml")};
 
         ByteArrayOutputStream stdoutContent = new ByteArrayOutputStream();
         PrintStream stdout = System.out;
 
-        // non-operators
         System.setOut(new PrintStream(stdoutContent));
-        MathMLUnificatorCommandLineTool.main(argvNonOperators);
+        MathMLUnificatorCommandLineTool.main(argv);
         System.setOut(stdout);
 
         String output = stdoutContent.toString(StandardCharsets.UTF_8.toString());
 
-        System.out.println("testMain – non-operators output:\n" + output);
+        System.out.println("testMain_multiple_formulae_non_operators – non-operators output:\n" + output);
         assertEquals(IOUtils.toString(getExpectedXMLTestResource(testFile + ".non-operator"), StandardCharsets.UTF_8), output);
 
-        // operators
-        stdoutContent = new ByteArrayOutputStream();
+    }
+
+    @Test
+    public void testMain_multiple_formulae_operators() throws Exception {
+
+        String testFile = "multiple-formulae";
+
+        String[] argv = {"-p", getTestResourceAsFilepath(testFile + ".input.xml")};
+
+        ByteArrayOutputStream stdoutContent = new ByteArrayOutputStream();
+        PrintStream stdout = System.out;
+
         System.setOut(new PrintStream(stdoutContent));
-        MathMLUnificatorCommandLineTool.main(argvOperators);
+        MathMLUnificatorCommandLineTool.main(argv);
         System.setOut(stdout);
 
-        output = stdoutContent.toString(StandardCharsets.UTF_8.toString());
+        String output = stdoutContent.toString(StandardCharsets.UTF_8.toString());
 
-        System.out.println("testMain – operators output:\n" + output);
+        System.out.println("testMain_multiple_formulae_operators – operators output:\n" + output);
+        assertEquals(IOUtils.toString(getExpectedXMLTestResource(testFile + ".operator"), StandardCharsets.UTF_8), output);
+
+    }
+
+    @Test
+    public void testMain_latexml_non_operators() throws Exception {
+
+        String testFile = "latexml";
+
+        String[] argv = {getTestResourceAsFilepath(testFile + ".input.xml")};
+
+        ByteArrayOutputStream stdoutContent = new ByteArrayOutputStream();
+        PrintStream stdout = System.out;
+
+        System.setOut(new PrintStream(stdoutContent));
+        MathMLUnificatorCommandLineTool.main(argv);
+        System.setOut(stdout);
+
+        String output = stdoutContent.toString(StandardCharsets.UTF_8.toString());
+
+        System.out.println("testMain_latexml_non_operators – non-operators output:\n" + output);
+        assertEquals(IOUtils.toString(getExpectedXMLTestResource(testFile + ".non-operator"), StandardCharsets.UTF_8), output);
+
+    }
+
+    @Test
+    public void testMain_latexml_operators() throws Exception {
+
+        String testFile = "latexml";
+
+        String[] argv = {"-p", getTestResourceAsFilepath(testFile + ".input.xml")};
+
+        ByteArrayOutputStream stdoutContent = new ByteArrayOutputStream();
+        PrintStream stdout = System.out;
+
+        System.setOut(new PrintStream(stdoutContent));
+        MathMLUnificatorCommandLineTool.main(argv);
+        System.setOut(stdout);
+
+        String output = stdoutContent.toString(StandardCharsets.UTF_8.toString());
+
+        System.out.println("testMain_latexml_operators – operators output:\n" + output);
         assertEquals(IOUtils.toString(getExpectedXMLTestResource(testFile + ".operator"), StandardCharsets.UTF_8), output);
 
     }

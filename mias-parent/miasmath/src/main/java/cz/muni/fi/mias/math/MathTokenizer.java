@@ -677,7 +677,7 @@ public class MathTokenizer extends Tokenizer {
             }
             if (MathMLConstants.PMML_MI.equals(node.getLocalName()) || MathMLConstants.CMML_CI.equals(node.getLocalName())) {
                 String oldVar = node.getTextContent();
-                if (oldVar != null && !oldVar.equals(Constants.UNIFICATOR)) {
+                if (oldVar != null && !oldVar.equals(Constants.PMATHML_UNIFICATOR) && !oldVar.equals(Constants.CMATHML_UNIFICATOR)) {
                     if (keepAlphaEquivalence) {
                         String newVar = toVar(oldVar, changes);
                         node.setTextContent(newVar);

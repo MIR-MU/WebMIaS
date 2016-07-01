@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unified-math xmlns="http://mir.fi.muni.cz/mathml-unification/">
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mrow id="S5.p1.1.m1.1.7" xref="S5.p1.1.m1.1.7.cmml">
+                <msub id="S5.p1.1.m1.1.7.2" xref="S5.p1.1.m1.1.7.2.cmml">
+                    <mi id="S5.p1.1.m1.1.1" xref="S5.p1.1.m1.1.1.cmml">N</mi>
+                    <mo id="S5.p1.1.m1.1.2.1" xref="S5.p1.1.m1.1.2.1.cmml">-</mo>
+                </msub>
+                <mo id="S5.p1.1.m1.1.7.1" xref="S5.p1.1.m1.1.7.1.cmml">⁢</mo>
+                <mrow id="S5.p1.1.m1.1.7.3" xref="S5.p1.1.m1.1.7.3.cmml">
+                    <mo id="S5.p1.1.m1.1.7.3a" xref="S5.p1.1.m1.1.7.3.cmml">(</mo>
+                    <msub id="S5.p1.1.m1.1.7.3b" xref="S5.p1.1.m1.1.7.3.cmml">
+                        <mi id="S5.p1.1.m1.1.4" xref="S5.p1.1.m1.1.4.cmml">&#x1d407;</mi>
+                        <mrow id="S5.p1.1.m1.1.5.1" xref="S5.p1.1.m1.1.5.1.cmml">
+                            <mi id="S5.p1.1.m1.1.5.1.1" xref="S5.p1.1.m1.1.5.1.1.cmml">α</mi>
+                            <mo id="S5.p1.1.m1.1.5.1.3" xref="S5.p1.1.m1.1.5.1.3.cmml">⁢</mo>
+                            <mi id="S5.p1.1.m1.1.5.1.2" xref="S5.p1.1.m1.1.5.1.2.cmml">V</mi>
+                        </mrow>
+                    </msub>
+                    <mo id="S5.p1.1.m1.1.7.3c" xref="S5.p1.1.m1.1.7.3.cmml">)</mo>
+                </mrow>
+            </mrow>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <apply id="S5.p1.1.m1.1.7.cmml" xref="S5.p1.1.m1.1.7">
+                    <times id="S5.p1.1.m1.1.7.1.cmml" xref="S5.p1.1.m1.1.7.1"/>
+                    <apply id="S5.p1.1.m1.1.7.2.cmml" xref="S5.p1.1.m1.1.7.2">
+                        <csymbol cd="ambiguous" id="S5.p1.1.m1.1.7.2.1.cmml">subscript</csymbol>
+                        <ci id="S5.p1.1.m1.1.1.cmml" xref="S5.p1.1.m1.1.1">N</ci>
+                        <minus id="S5.p1.1.m1.1.2.1.cmml" xref="S5.p1.1.m1.1.2.1"/>
+                    </apply>
+                    <apply id="S5.p1.1.m1.1.7.3.cmml" xref="S5.p1.1.m1.1.7.3">
+                        <csymbol cd="ambiguous" id="S5.p1.1.m1.1.7.3.1.cmml">subscript</csymbol>
+                        <ci id="S5.p1.1.m1.1.4.cmml" xref="S5.p1.1.m1.1.4">&#x1d407;</ci>
+                        <apply id="S5.p1.1.m1.1.5.1.cmml" xref="S5.p1.1.m1.1.5.1">
+                            <times id="S5.p1.1.m1.1.5.1.3.cmml" xref="S5.p1.1.m1.1.5.1.3"/>
+                            <ci id="S5.p1.1.m1.1.5.1.1.cmml" xref="S5.p1.1.m1.1.5.1.1">α</ci>
+                            <ci id="S5.p1.1.m1.1.5.1.2.cmml" xref="S5.p1.1.m1.1.5.1.2">V</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="1" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mrow id="S5.p1.1.m1.1.7" xref="S5.p1.1.m1.1.7.cmml">
+                <msub id="S5.p1.1.m1.1.7.2" xref="S5.p1.1.m1.1.7.2.cmml">
+                    <mi id="S5.p1.1.m1.1.1" xref="S5.p1.1.m1.1.1.cmml">N</mi>
+                    <mo id="S5.p1.1.m1.1.2.1" xref="S5.p1.1.m1.1.2.1.cmml">-</mo>
+                </msub>
+                <mo id="S5.p1.1.m1.1.7.1" xref="S5.p1.1.m1.1.7.1.cmml">⁢</mo>
+                <mrow id="S5.p1.1.m1.1.7.3" xref="S5.p1.1.m1.1.7.3.cmml">
+                    <mo id="S5.p1.1.m1.1.7.3a" xref="S5.p1.1.m1.1.7.3.cmml">(</mo>
+                    <msub id="S5.p1.1.m1.1.7.3b" xref="S5.p1.1.m1.1.7.3.cmml">
+                        <mi id="S5.p1.1.m1.1.4" xref="S5.p1.1.m1.1.4.cmml">&#x1d407;</mi>
+                        <mrow id="S5.p1.1.m1.1.5.1" xref="S5.p1.1.m1.1.5.1.cmml">
+                            <mi>◍</mi>
+                            <mo id="S5.p1.1.m1.1.5.1.3" xref="S5.p1.1.m1.1.5.1.3.cmml">⁢</mo>
+                            <mi>◍</mi>
+                        </mrow>
+                    </msub>
+                    <mo id="S5.p1.1.m1.1.7.3c" xref="S5.p1.1.m1.1.7.3.cmml">)</mo>
+                </mrow>
+            </mrow>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <apply id="S5.p1.1.m1.1.7.cmml" xref="S5.p1.1.m1.1.7">
+                    <times id="S5.p1.1.m1.1.7.1.cmml" xref="S5.p1.1.m1.1.7.1"/>
+                    <apply id="S5.p1.1.m1.1.7.2.cmml" xref="S5.p1.1.m1.1.7.2">
+                        <csymbol cd="ambiguous" id="S5.p1.1.m1.1.7.2.1.cmml">subscript</csymbol>
+                        <ci id="S5.p1.1.m1.1.1.cmml" xref="S5.p1.1.m1.1.1">N</ci>
+                        <minus id="S5.p1.1.m1.1.2.1.cmml" xref="S5.p1.1.m1.1.2.1"/>
+                    </apply>
+                    <apply id="S5.p1.1.m1.1.7.3.cmml" xref="S5.p1.1.m1.1.7.3">
+                        <csymbol cd="ambiguous" id="S5.p1.1.m1.1.7.3.1.cmml">subscript</csymbol>
+                        <ci id="S5.p1.1.m1.1.4.cmml" xref="S5.p1.1.m1.1.4">&#x1d407;</ci>
+                        <apply id="S5.p1.1.m1.1.5.1.cmml" xref="S5.p1.1.m1.1.5.1">
+                            <csymbol>◐</csymbol>
+                            <ci>◐</ci>
+                            <ci>◐</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="2" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mrow id="S5.p1.1.m1.1.7" xref="S5.p1.1.m1.1.7.cmml">
+                <msub id="S5.p1.1.m1.1.7.2" xref="S5.p1.1.m1.1.7.2.cmml">
+                    <mi id="S5.p1.1.m1.1.1" xref="S5.p1.1.m1.1.1.cmml">N</mi>
+                    <mo id="S5.p1.1.m1.1.2.1" xref="S5.p1.1.m1.1.2.1.cmml">-</mo>
+                </msub>
+                <mo id="S5.p1.1.m1.1.7.1" xref="S5.p1.1.m1.1.7.1.cmml">⁢</mo>
+                <mrow id="S5.p1.1.m1.1.7.3" xref="S5.p1.1.m1.1.7.3.cmml">
+                    <mo id="S5.p1.1.m1.1.7.3a" xref="S5.p1.1.m1.1.7.3.cmml">(</mo>
+                    <msub id="S5.p1.1.m1.1.7.3b" xref="S5.p1.1.m1.1.7.3.cmml">
+                        <mi id="S5.p1.1.m1.1.4" xref="S5.p1.1.m1.1.4.cmml">&#x1d407;</mi>
+                        <mrow id="S5.p1.1.m1.1.5.1" xref="S5.p1.1.m1.1.5.1.cmml">
+                            <mi>◍</mi>
+                            <mo>◍</mo>
+                            <mi>◍</mi>
+                        </mrow>
+                    </msub>
+                    <mo id="S5.p1.1.m1.1.7.3c" xref="S5.p1.1.m1.1.7.3.cmml">)</mo>
+                </mrow>
+            </mrow>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <apply id="S5.p1.1.m1.1.7.cmml" xref="S5.p1.1.m1.1.7">
+                    <times id="S5.p1.1.m1.1.7.1.cmml" xref="S5.p1.1.m1.1.7.1"/>
+                    <apply id="S5.p1.1.m1.1.7.2.cmml" xref="S5.p1.1.m1.1.7.2">
+                        <csymbol cd="ambiguous" id="S5.p1.1.m1.1.7.2.1.cmml">subscript</csymbol>
+                        <ci id="S5.p1.1.m1.1.1.cmml" xref="S5.p1.1.m1.1.1">N</ci>
+                        <minus id="S5.p1.1.m1.1.2.1.cmml" xref="S5.p1.1.m1.1.2.1"/>
+                    </apply>
+                    <apply id="S5.p1.1.m1.1.7.3.cmml" xref="S5.p1.1.m1.1.7.3">
+                        <csymbol cd="ambiguous" id="S5.p1.1.m1.1.7.3.1.cmml">subscript</csymbol>
+                        <ci id="S5.p1.1.m1.1.4.cmml" xref="S5.p1.1.m1.1.4">&#x1d407;</ci>
+                        <apply id="S5.p1.1.m1.1.5.1.cmml" xref="S5.p1.1.m1.1.5.1">
+                            <csymbol>◐</csymbol>
+                            <ci>◐</ci>
+                            <ci>◐</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="3" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mrow id="S5.p1.1.m1.1.7" xref="S5.p1.1.m1.1.7.cmml">
+                <msub id="S5.p1.1.m1.1.7.2" xref="S5.p1.1.m1.1.7.2.cmml">
+                    <mi id="S5.p1.1.m1.1.1" xref="S5.p1.1.m1.1.1.cmml">N</mi>
+                    <mo id="S5.p1.1.m1.1.2.1" xref="S5.p1.1.m1.1.2.1.cmml">-</mo>
+                </msub>
+                <mo id="S5.p1.1.m1.1.7.1" xref="S5.p1.1.m1.1.7.1.cmml">⁢</mo>
+                <mrow id="S5.p1.1.m1.1.7.3" xref="S5.p1.1.m1.1.7.3.cmml">
+                    <mo id="S5.p1.1.m1.1.7.3a" xref="S5.p1.1.m1.1.7.3.cmml">(</mo>
+                    <msub id="S5.p1.1.m1.1.7.3b" xref="S5.p1.1.m1.1.7.3.cmml">
+                        <mi>◍</mi>
+                        <mi>◍</mi>
+                    </msub>
+                    <mo id="S5.p1.1.m1.1.7.3c" xref="S5.p1.1.m1.1.7.3.cmml">)</mo>
+                </mrow>
+            </mrow>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <apply id="S5.p1.1.m1.1.7.cmml" xref="S5.p1.1.m1.1.7">
+                    <times id="S5.p1.1.m1.1.7.1.cmml" xref="S5.p1.1.m1.1.7.1"/>
+                    <apply id="S5.p1.1.m1.1.7.2.cmml" xref="S5.p1.1.m1.1.7.2">
+                        <csymbol>◐</csymbol>
+                        <ci>◐</ci>
+                        <csymbol>◐</csymbol>
+                    </apply>
+                    <apply id="S5.p1.1.m1.1.7.3.cmml" xref="S5.p1.1.m1.1.7.3">
+                        <csymbol>◐</csymbol>
+                        <ci>◐</ci>
+                        <csymbol>◐</csymbol>
+                    </apply>
+                </apply>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="4" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mrow id="S5.p1.1.m1.1.7" xref="S5.p1.1.m1.1.7.cmml">
+                <msub id="S5.p1.1.m1.1.7.2" xref="S5.p1.1.m1.1.7.2.cmml">
+                    <mi>◍</mi>
+                    <mo id="S5.p1.1.m1.1.2.1" xref="S5.p1.1.m1.1.2.1.cmml">-</mo>
+                </msub>
+                <mo id="S5.p1.1.m1.1.7.1" xref="S5.p1.1.m1.1.7.1.cmml">⁢</mo>
+                <mrow id="S5.p1.1.m1.1.7.3" xref="S5.p1.1.m1.1.7.3.cmml">
+                    <mo id="S5.p1.1.m1.1.7.3a" xref="S5.p1.1.m1.1.7.3.cmml">(</mo>
+                    <mi>◍</mi>
+                    <mo id="S5.p1.1.m1.1.7.3c" xref="S5.p1.1.m1.1.7.3.cmml">)</mo>
+                </mrow>
+            </mrow>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <apply id="S5.p1.1.m1.1.7.cmml" xref="S5.p1.1.m1.1.7">
+                    <csymbol>◐</csymbol>
+                    <csymbol>◐</csymbol>
+                    <csymbol>◐</csymbol>
+                </apply>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="5" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mrow id="S5.p1.1.m1.1.7" xref="S5.p1.1.m1.1.7.cmml">
+                <msub id="S5.p1.1.m1.1.7.2" xref="S5.p1.1.m1.1.7.2.cmml">
+                    <mi>◍</mi>
+                    <mo>◍</mo>
+                </msub>
+                <mo id="S5.p1.1.m1.1.7.1" xref="S5.p1.1.m1.1.7.1.cmml">⁢</mo>
+                <mrow id="S5.p1.1.m1.1.7.3" xref="S5.p1.1.m1.1.7.3.cmml">
+                    <mo>◍</mo>
+                    <mi>◍</mi>
+                    <mo>◍</mo>
+                </mrow>
+            </mrow>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <apply id="S5.p1.1.m1.1.7.cmml" xref="S5.p1.1.m1.1.7">
+                    <csymbol>◐</csymbol>
+                    <csymbol>◐</csymbol>
+                    <csymbol>◐</csymbol>
+                </apply>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="6" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mrow id="S5.p1.1.m1.1.7" xref="S5.p1.1.m1.1.7.cmml">
+                <mi>◍</mi>
+                <mo id="S5.p1.1.m1.1.7.1" xref="S5.p1.1.m1.1.7.1.cmml">⁢</mo>
+                <mi>◍</mi>
+            </mrow>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <csymbol>◐</csymbol>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="7" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mrow id="S5.p1.1.m1.1.7" xref="S5.p1.1.m1.1.7.cmml">
+                <mi>◍</mi>
+                <mo>◍</mo>
+                <mi>◍</mi>
+            </mrow>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <csymbol>◐</csymbol>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="8" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mi>◍</mi>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <csymbol>◐</csymbol>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+    <math alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math"
+        display="inline" id="S5.p1.1.m1.1"
+        xmlns:uni="http://mir.fi.muni.cz/mathml-unification/"
+        uni:unification-level="9" uni:unification-max-level="9"
+        xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml">
+        <semantics id="S5.p1.1.m1.1a" xref="S5.p1.1.m1.1.cmml">
+            <mi>◍</mi>
+            <annotation-xml encoding="MathML-Content"
+                id="S5.p1.1.m1.1.cmml" xref="S5.p1.1.m1.1">
+                <csymbol>◐</csymbol>
+            </annotation-xml>
+            <annotation encoding="application/x-tex" id="S5.p1.1.m1.1b" xref="S5.p1.1.m1.1.cmml">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+        </semantics>
+    </math>
+</unified-math>

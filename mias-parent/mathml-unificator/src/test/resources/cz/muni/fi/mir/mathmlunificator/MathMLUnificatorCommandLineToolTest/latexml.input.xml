@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<math xmlns="http://www.w3.org/1998/Math/MathML" xref="S5.p1.1.m1.1.cmml" alttext="N_{-}(\mathbf{H}_{\alpha V})" class="ltx_Math" id="S5.p1.1.m1.1" display="inline">
+  <semantics xref="S5.p1.1.m1.1.cmml" id="S5.p1.1.m1.1a">
+    <mrow xref="S5.p1.1.m1.1.7.cmml" id="S5.p1.1.m1.1.7">
+      <msub xref="S5.p1.1.m1.1.7.2.cmml" id="S5.p1.1.m1.1.7.2">
+        <mi xref="S5.p1.1.m1.1.1.cmml" id="S5.p1.1.m1.1.1">N</mi>
+        <mo xref="S5.p1.1.m1.1.2.1.cmml" id="S5.p1.1.m1.1.2.1">-</mo>
+      </msub>
+      <mo xref="S5.p1.1.m1.1.7.1.cmml" id="S5.p1.1.m1.1.7.1">⁢</mo>
+      <mrow xref="S5.p1.1.m1.1.7.3.cmml" id="S5.p1.1.m1.1.7.3">
+        <mo xref="S5.p1.1.m1.1.7.3.cmml" id="S5.p1.1.m1.1.7.3a">(</mo>
+        <msub xref="S5.p1.1.m1.1.7.3.cmml" id="S5.p1.1.m1.1.7.3b">
+          <mi xref="S5.p1.1.m1.1.4.cmml" id="S5.p1.1.m1.1.4">𝐇</mi>
+          <mrow xref="S5.p1.1.m1.1.5.1.cmml" id="S5.p1.1.m1.1.5.1">
+            <mi xref="S5.p1.1.m1.1.5.1.1.cmml" id="S5.p1.1.m1.1.5.1.1">α</mi>
+            <mo xref="S5.p1.1.m1.1.5.1.3.cmml" id="S5.p1.1.m1.1.5.1.3">⁢</mo>
+            <mi xref="S5.p1.1.m1.1.5.1.2.cmml" id="S5.p1.1.m1.1.5.1.2">V</mi>
+          </mrow>
+        </msub>
+        <mo xref="S5.p1.1.m1.1.7.3.cmml" id="S5.p1.1.m1.1.7.3c">)</mo>
+      </mrow>
+    </mrow>
+    <annotation-xml xref="S5.p1.1.m1.1" id="S5.p1.1.m1.1.cmml" encoding="MathML-Content">
+      <apply xref="S5.p1.1.m1.1.7" id="S5.p1.1.m1.1.7.cmml">
+        <times xref="S5.p1.1.m1.1.7.1" id="S5.p1.1.m1.1.7.1.cmml"/>
+        <apply xref="S5.p1.1.m1.1.7.2" id="S5.p1.1.m1.1.7.2.cmml">
+          <csymbol cd="ambiguous" id="S5.p1.1.m1.1.7.2.1.cmml">subscript</csymbol>
+          <ci xref="S5.p1.1.m1.1.1" id="S5.p1.1.m1.1.1.cmml">N</ci>
+          <minus xref="S5.p1.1.m1.1.2.1" id="S5.p1.1.m1.1.2.1.cmml"/>
+        </apply>
+        <apply xref="S5.p1.1.m1.1.7.3" id="S5.p1.1.m1.1.7.3.cmml">
+          <csymbol cd="ambiguous" id="S5.p1.1.m1.1.7.3.1.cmml">subscript</csymbol>
+          <ci xref="S5.p1.1.m1.1.4" id="S5.p1.1.m1.1.4.cmml">𝐇</ci>
+          <apply xref="S5.p1.1.m1.1.5.1" id="S5.p1.1.m1.1.5.1.cmml">
+            <times xref="S5.p1.1.m1.1.5.1.3" id="S5.p1.1.m1.1.5.1.3.cmml"/>
+            <ci xref="S5.p1.1.m1.1.5.1.1" id="S5.p1.1.m1.1.5.1.1.cmml">α</ci>
+            <ci xref="S5.p1.1.m1.1.5.1.2" id="S5.p1.1.m1.1.5.1.2.cmml">V</ci>
+          </apply>
+        </apply>
+      </apply>
+    </annotation-xml>
+    <annotation xref="S5.p1.1.m1.1.cmml" id="S5.p1.1.m1.1b" encoding="application/x-tex">N_{-}(\mathbf{H}_{\alpha V})</annotation>
+  </semantics>
+</math>

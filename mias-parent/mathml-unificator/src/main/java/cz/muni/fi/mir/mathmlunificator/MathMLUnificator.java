@@ -18,6 +18,7 @@ package cz.muni.fi.mir.mathmlunificator;
 import cz.muni.fi.mir.mathmlunificator.config.Constants;
 import static cz.muni.fi.mir.mathmlunificator.config.Constants.*;
 import cz.muni.fi.mir.mathmlunificator.utils.DOMBuilder;
+import cz.muni.fi.mir.mathmlunificator.utils.MathMLTools;
 import cz.muni.fi.mir.mathmlunificator.utils.XMLOut;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -45,7 +46,9 @@ import org.xml.sax.SAXException;
  * <a href="http://research.nii.ac.jp/ntcir/workshop/OnlineProceedings11/pdf/NTCIR/Math-2/07-NTCIR11-MATH-RuzickaM.pdf#page=7&zoom=page-fit">as
  * proposed</a>, i.e. single MathML formula transforms to series of formulae
  * with leaf elements substituted gradually for a special unification
- * representing symbol <code>&#x25CD;</code> (see {@link Constants#UNIFICATOR}).
+ * representing symbol {@code &#x25CD;} (for Presentation MathML, see
+ * {@link Constants#PMATHML_UNIFICATOR}) or {@code &#x25D0;} (for Content
+ * MathML, see {@link Constants#CMATHML_UNIFICATOR}).
  *
  * @author Michal Růžička
  */
@@ -73,8 +76,10 @@ public class MathMLUnificator {
      * In the given W3C DOM represented XML document find all maths nodes (see
      * {@link DocumentParser#findMathMLNodes(org.w3c.dom.Document)}) and
      * substitute them for series of formulae with leaf elements substituted
-     * gradually for a special unification representing symbol
-     * <code>&#x25CD;</code> (see {@link Constants#UNIFICATOR}).
+     * gradually for a special unification representing symbol {@code &#x25CD;}
+     * (for Presentation MathML, see {@link Constants#PMATHML_UNIFICATOR}) or
+     * {@code &#x25D0;} (for Content MathML, see
+     * {@link Constants#CMATHML_UNIFICATOR}).
      * </p>
      * <p>
      * Resulting series of the original and unified MathML nodes is itself
@@ -103,8 +108,10 @@ public class MathMLUnificator {
      * In the given W3C DOM represented XML document find all maths nodes (see
      * {@link DocumentParser#findMathMLNodes(org.w3c.dom.Document)}) and
      * substitute them for series of formulae with leaf elements substituted
-     * gradually for a special unification representing symbol
-     * <code>&#x25CD;</code> (see {@link Constants#UNIFICATOR}).
+     * gradually for a special unification representing symbol {@code &#x25CD;}
+     * (for Presentation MathML, see {@link Constants#PMATHML_UNIFICATOR}) or
+     * {@code &#x25D0;} (for Content MathML, see
+     * {@link Constants#CMATHML_UNIFICATOR}).
      * </p>
      * <p>
      * Resulting series of the original and unified MathML nodes is itself
@@ -147,8 +154,9 @@ public class MathMLUnificator {
      * <p>
      * Substitute the given MathML {@link Node} for series of MathML formulae
      * with leaf elements substituted gradually for a special unification
-     * representing symbol <code>&#x25CD;</code> (see
-     * {@link Constants#UNIFICATOR}).
+     * representing symbol {@code &#x25CD;} (for Presentation MathML, see
+     * {@link Constants#PMATHML_UNIFICATOR}) or {@code &#x25D0;} (for Content
+     * MathML, see {@link Constants#CMATHML_UNIFICATOR}).
      * </p>
      * <p>
      * Resulting series of the original and unified MathML nodes is itself
@@ -173,8 +181,9 @@ public class MathMLUnificator {
      * <p>
      * Transforms the given MathML {@link Node} for series of MathML formulae
      * with leaf elements substituted gradually for a special unification
-     * representing symbol <code>&#x25CD;</code> (see
-     * {@link Constants#UNIFICATOR}).
+     * representing symbol {@code &#x25CD;} (for Presentation MathML, see
+     * {@link Constants#PMATHML_UNIFICATOR}) or {@code &#x25D0;} (for Content
+     * MathML, see {@link Constants#CMATHML_UNIFICATOR}).
      * </p>
      *
      * @param mathNode W3C DOM XML document representation attached MathML node
@@ -199,8 +208,9 @@ public class MathMLUnificator {
      * remember links to operator elements and other elements in
      * {@link #nodesByDepth} data structure. Then substitute them gradualy for
      * series of formulae with leaf elements substituted for a special
-     * unification representing symbol <code>&#x25CD;</code> (see
-     * {@link Constants#UNIFICATOR}).
+     * unification representing symbol {@code &#x25CD;} (for Presentation
+     * MathML, see {@link Constants#PMATHML_UNIFICATOR}) or {@code &#x25D0;}
+     * (for Content MathML, see {@link Constants#CMATHML_UNIFICATOR}).
      * </p>
      * <p>
      * Resulting series of the original and unified MathML nodes is itself
@@ -231,8 +241,9 @@ public class MathMLUnificator {
      * remember links to operator elements and other elements in
      * {@link #nodesByDepth} data structure. Then substitute them gradualy for
      * series of formulae with leaf elements substituted for a special
-     * unification representing symbol <code>&#x25CD;</code> (see
-     * {@link Constants#UNIFICATOR}).
+     * unification representing symbol {@code &#x25CD;} (for Presentation
+     * MathML, see {@link Constants#PMATHML_UNIFICATOR}) or {@code &#x25D0;}
+     * (for Content MathML, see {@link Constants#CMATHML_UNIFICATOR}).
      * </p>
      * <p>
      * Resulting series of the original and unified MathML nodes is itself
@@ -413,7 +424,9 @@ public class MathMLUnificator {
      * given by an instance of {@link NodeLevel} and replace these nodes (if
      * applicable, i.e. nodes are {@link Node#ELEMENT_NODE} elements) with
      * unification elements containing unification representing symbol
-     * <code>&#x25CD;</code> (see {@link Constants#UNIFICATOR}).
+     * {@code &#x25CD;} (for Presentation MathML, see
+     * {@link Constants#PMATHML_UNIFICATOR}) or {@code &#x25D0;} (for Content
+     * MathML, see {@link Constants#CMATHML_UNIFICATOR}).
      *
      * @param level Level in {@link #nodesByDepth} to work on.
      * @return <code>true</code> if any unifiable nodes were found at given
@@ -446,8 +459,9 @@ public class MathMLUnificator {
 
     /**
      * Replace the given node with unification element containing unification
-     * representing symbol <code>&#x25CD;</code> (see
-     * {@link Constants#UNIFICATOR}).
+     * representing symbol {@code &#x25CD;} (for Presentation MathML, see
+     * {@link Constants#PMATHML_UNIFICATOR}) or {@code &#x25D0;} (for Content
+     * MathML, see {@link Constants#CMATHML_UNIFICATOR}).
      *
      * @param oldNode The node to be replaced with the unification representing
      * element.
@@ -460,10 +474,17 @@ public class MathMLUnificator {
         if (parentNode == null) {
             throw new IllegalArgumentException("Cannot replace node [" + oldNode + "] that has no parent.");
         } else {
-            String unificatorElementType = oldNode.getNodeName().equals(PMATHML_OPERATOR) ? PMATHML_OPERATOR : PMATHML_IDENTIFIER;
-            Node newNode = oldNode.getOwnerDocument().createElementNS(oldNode.getNamespaceURI(), unificatorElementType);
-            newNode.setTextContent(UNIFICATOR);
-            parentNode.replaceChild(newNode, oldNode);
+            if (!Constants.CMATHML_ANNOTATIONS.contains(oldNode.getNodeName())) {  // Do not modify annotation elements!
+                String unificator = PMATHML_UNIFICATOR;
+                String unificatorElementType = oldNode.getNodeName().equals(PMATHML_OPERATOR) ? PMATHML_OPERATOR : PMATHML_IDENTIFIER;
+                if (MathMLTools.isContentMathMLNode(oldNode)) {
+                    unificator = CMATHML_UNIFICATOR;
+                    unificatorElementType = Constants.CMATHML_IDENTIFIER_OR_NUMBER.contains(oldNode.getNodeName()) ? CMATHML_IDENTIFIER : CMATHML_SYMBOL;
+                }
+                Node newNode = oldNode.getOwnerDocument().createElementNS(oldNode.getNamespaceURI(), unificatorElementType);
+                newNode.setTextContent(unificator);
+                parentNode.replaceChild(newNode, oldNode);
+            }
         }
 
     }

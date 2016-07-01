@@ -169,5 +169,4 @@ abstract class AbstractModuleTest {
         System.out.println("--------------------");
         System.out.println();
     }
-
 }

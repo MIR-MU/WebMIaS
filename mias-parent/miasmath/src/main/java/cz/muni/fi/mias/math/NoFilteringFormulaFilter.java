@@ -15,23 +15,22 @@
  */
 package cz.muni.fi.mias.math;
 
-import org.w3c.dom.Node;
-
 /**
- * Interface for computing {@link Node} ‘value’ – abstract measure of some
- * quality or property of the {@link Node} such as its complexity (given by
- * number of subnodes etc.), for example.
+ * Dummy formula filter allowing any formula to pass.
  *
- * @author Martin Liska
+ * @author Michal Růžička
  */
-public interface FormulaValuator {
+public class NoFilteringFormulaFilter implements FormulaFilter {
 
     /**
-     * @param node MathML node denoting a formula
-     * @param mmlType Type of the MathML which needs to be considered in the
-     * valuation
-     * @return value of implemented metric for the given formula
+     * Allways decides that given {@code formula} should be used.
+     *
+     * @param formula {@link Formula} to be judged.
+     * @return {@code true} for any {@link Formula}
      */
-    float value(Node node, MathTokenizer.MathMLType mmlType);
+    @Override
+    public boolean passes(Formula formula) {
+        return true;
+    }
 
 }

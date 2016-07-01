@@ -62,7 +62,13 @@ public class MathTokenizer extends Tokenizer {
 
     public static final int TOKEN_TRIM_LENGTH = 20000;
 
-    private static final FormulaValuator valuator = new CountNodesFormulaValuator();
+    private static final FormulaValuator formulaComplexityValuator = new CountNodesFormulaValuator();
+    // // Alternatively you can use constant value as the initial rank (weight) of
+    // // any input formula (use of constant value results in more accurate
+    // // ranking of documents if two or more formulae of different complexity is
+    // // used in one query):
+    // private static final FormulaValuator inputFormulaValuator = new ConstantFormulaValuator();
+    private static final FormulaValuator inputFormulaValuator = formulaComplexityValuator;
     private static final UnifiedFormulaValuator unifiedNodeValuator = new UnifiedFormulaValuator();
     private static final Map<String, List<String>> ops = MathMLConf.getOperators();
     private static final Map<String, String> eldict = MathMLConf.getElementDictionary();
@@ -86,7 +92,13 @@ public class MathTokenizer extends Tokenizer {
     private final boolean subformulae;
     private final MathMLType mmlType;
     private int formulaPosition = 1;
+
+    // formulae filtering befor adding to the index
     private final boolean addTrivialFormulae = false;
+    // Alternatively you can filter formulae with too low weights:
+    // // To the index add only formulae with relative weight comparing to their original formula greater or equal to 10%
+    // private final FormulaFilter formulaFilter = new RelativeWeightFormulaFilter(10.0f);
+    private final FormulaFilter formulaFilter = new NoFilteringFormulaFilter();
 
     // fields with state related to tokenization of current input;
     // fields must be correctly reset in order for this tokenizer to be re-usable
@@ -282,7 +294,7 @@ public class MathTokenizer extends Tokenizer {
     }
 
     private boolean addFormula(int position, Formula formula) {
-        if (addTrivialFormulae || !isTrivial(formula)) {
+        if (formulaFilter.passes(formula) && (addTrivialFormulae || !isTrivial(formula))) {
             formulae.get(position).add(formula);
             return true;
         } else {
@@ -293,7 +305,7 @@ public class MathTokenizer extends Tokenizer {
     private List<Formula> addAllFormulea(List<Formula> collectionToAddTo, List<Formula> formulaeToAdd) {
         List<Formula> nontrivialFormulae = new ArrayList<>();
         for (Formula f : formulaeToAdd) {
-            if (addTrivialFormulae || !isTrivial(f)) {
+            if (formulaFilter.passes(f) && (addTrivialFormulae || !isTrivial(f))) {
                 nontrivialFormulae.add(f);
             }
         }
@@ -319,7 +331,7 @@ public class MathTokenizer extends Tokenizer {
         for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
             formulae.put(i, new ArrayList<>());
-            float rank = subformulae ? (1 / valuator.count(node, mmlType)) : valuator.count(node, mmlType);
+            float rank = subformulae ? (1 / inputFormulaValuator.value(node, mmlType)) : inputFormulaValuator.value(node, mmlType);
             loadNode(node, rank, i);
         }
     }
@@ -352,7 +364,7 @@ public class MathTokenizer extends Tokenizer {
                     }
                 }
                 if (store && !MathMLConf.ignoreNode(name)) {
-                    addFormula(position, new Formula(n, level));
+                    addFormula(position, new Formula(n, level, level));
                     loadUnifiedNodes(n, level, position);
                 }
             }
@@ -370,16 +382,16 @@ public class MathTokenizer extends Tokenizer {
      * @param position position of the original formula in the map of formulae
      */
     private void loadUnifiedNodes(Node n, float basicWeight, int position) {
-        int nodeComplexity = (int) valuator.count(n, mmlType);
+        int nodeComplexity = (int) formulaComplexityValuator.value(n, mmlType);
         LOG.finer("Loading node of input complexity " + nodeComplexity + " for unification.");
         if (nodeComplexity <= MathMLConf.inputNodeComplexityUnificationLimit) {
             if (n.getNodeType() == Node.ELEMENT_NODE) {
                 HashMap<Integer, Node> unifiedMathMLNodes = MathMLUnificator.getUnifiedMathMLNodes(n, false);
                 for (int uniLevel : unifiedMathMLNodes.keySet()) {
                     Node un = unifiedMathMLNodes.get(uniLevel);
-                    float nodeWeightCoef = unifiedNodeValuator.count(un, mmlType);
+                    float nodeWeightCoef = unifiedNodeValuator.value(un, mmlType);
                     float weight = basicWeight * nodeWeightCoef;
-                    addFormula(position, new Formula(un, weight));
+                    addFormula(position, new Formula(un, weight, basicWeight));
                 }
             }
         } else {
@@ -424,7 +436,7 @@ public class MathTokenizer extends Tokenizer {
                 removeAttributes(node);
                 boolean changed = processAttributesNode(newNode);
                 if (changed) {
-                    result.add(new Formula(newNode, f.getWeight() * rank));
+                    result.add(new Formula(newNode, f.getWeight() * rank, f.getOriginalFormulaWeight()));
                 }
             }
             forms.addAll(result);
@@ -642,7 +654,7 @@ public class MathTokenizer extends Tokenizer {
                         Node newNode = node.cloneNode(true);
                         boolean changed = unifyVariablesNode(newNode, changes, keepAlphaEquivalence);
                         if (changed) {
-                            result.add(new Formula(newNode, f.getWeight() * (keepAlphaEquivalence ? rank : vCoefGen * rank)));
+                            result.add(new Formula(newNode, f.getWeight() * (keepAlphaEquivalence ? rank : vCoefGen * rank), f.getOriginalFormulaWeight()));
                         }
                     }
                 }
@@ -735,7 +747,7 @@ public class MathTokenizer extends Tokenizer {
                     Node newNode = node.cloneNode(true);
                     boolean changed = unifyConstNode(newNode);
                     if (changed) {
-                        result.add(new Formula(newNode, f.getWeight() * rank));
+                        result.add(new Formula(newNode, f.getWeight() * rank, f.getOriginalFormulaWeight()));
                     }
                 }
             }
@@ -790,7 +802,7 @@ public class MathTokenizer extends Tokenizer {
                     Node newNode = node.cloneNode(true);
                     boolean changed = unifyOperatorsNode(newNode);
                     if (changed) {
-                        result.add(new Formula(newNode, f.getWeight() * rank));
+                        result.add(new Formula(newNode, f.getWeight() * rank, f.getOriginalFormulaWeight()));
                     }
                 }
             }

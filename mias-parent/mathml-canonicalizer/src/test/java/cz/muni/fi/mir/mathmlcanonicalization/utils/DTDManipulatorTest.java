@@ -38,8 +38,7 @@ public class DTDManipulatorTest {
     private static final String RESOURCE_SUBDIR = DTDManipulatorTest.class.getSimpleName() + "/";
 
     /**
-     * Test of injectXHTML11PlusMathML20PlusSVG11DTD method, of class
-     * DTDManipulator.
+     * Test of injectXHTML11PlusMathML20PlusSVG11DTD method, of class DTDManipulator.
      */
     @Test
     public void testInjectXHTMLPlusMathMLPlusSVGDTD() throws IOException {
@@ -92,5 +91,4 @@ public class DTDManipulatorTest {
         }
 
     }
-
 }

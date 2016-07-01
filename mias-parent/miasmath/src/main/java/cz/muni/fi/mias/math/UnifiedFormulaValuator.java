@@ -44,7 +44,7 @@ public class UnifiedFormulaValuator implements FormulaValuator {
      * the weight coefficient of given unified {@link Node}.
      */
     @Override
-    public float count(Node node, MathTokenizer.MathMLType mmlType) {
+    public float value(Node node, MathTokenizer.MathMLType mmlType) {
 
         UnificationLevel ul = MathMLUnificator.getNodeUnificationLevel(node);
         Integer level = ul.getNodeLevel();

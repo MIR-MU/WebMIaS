@@ -38,5 +38,4 @@ public interface StreamModule extends Module {
      * @throws ModuleException when cannot transform the input by this module
      */
     public ByteArrayOutputStream execute(InputStream input) throws ModuleException;
-
 }

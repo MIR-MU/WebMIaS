@@ -31,21 +31,35 @@ import org.w3c.dom.NodeList;
  */
 public class Formula {
 
+    /**
+     * Weight of the top-most formula (the original input formula) this formula
+     * was derived from.
+     *
+     * If the instance inself represents the original input formula this values
+     * should be equal to the {@link #weight} attribute.
+     */
+    private final float originalFormulaWeight;
+
     private float weight;
     private Node node;
     private String miasString;
 
-    public Formula() {
-    }
-
-    public Formula(Node node, float weight) {
+    /**
+     * @param originalFormulaWeight Weight of the top-most formula (the original
+     * input formula) this formula was derived from. If the instance inself
+     * represents the original input formula this values should be equal to the
+     * {@code weight} value.
+     */
+    public Formula(Node node, float weight, float originalFormulaWeight) {
         this.weight = weight;
         this.node = node;
+        this.originalFormulaWeight = originalFormulaWeight;
     }
 
     public Formula(Formula f) {
         this.node = f.getNode().cloneNode(true);
         this.weight = f.getWeight();
+        this.originalFormulaWeight = f.getOriginalFormulaWeight();
     }
 
     public String getMiasString() {
@@ -58,6 +72,20 @@ public class Formula {
 
     public float getWeight() {
         return weight;
+    }
+
+    /**
+     * Returns weight of the top-most formula (the original input formula) this
+     * formula was derived from.
+     *
+     * If the instance inself represents the original input formula this values
+     * should be equal to the {@link #getWeight()} value.
+     *
+     * @return Weight of the original input formula this formula was derived
+     * from.
+     */
+    public float getOriginalFormulaWeight() {
+        return originalFormulaWeight;
     }
 
     public void setWeight(float weight) {

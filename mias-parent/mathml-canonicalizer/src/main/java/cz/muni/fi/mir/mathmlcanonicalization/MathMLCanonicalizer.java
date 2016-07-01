@@ -55,9 +55,9 @@ import cz.muni.fi.mir.mathmlcanonicalization.utils.DTDManipulator;
 public final class MathMLCanonicalizer {
 
     private static final Logger LOGGER = Logger.getLogger(MathMLCanonicalizer.class.getName());
-
-    private List<StreamModule> streamModules = new LinkedList<>();
-    private List<DOMModule> domModules = new LinkedList<>();
+    
+    private List<StreamModule> streamModules = new LinkedList<StreamModule>();
+    private List<DOMModule> domModules = new LinkedList<DOMModule>();
     private boolean enforcingXHTMLPlusMathMLDTD = false;
 
     // TODO: refactoring
@@ -68,7 +68,7 @@ public final class MathMLCanonicalizer {
      */
     public static MathMLCanonicalizer getDefaultCanonicalizer() {
         try {
-            return new MathMLCanonicalizer(Settings.getStreamFromProperty("defaultConfig"));
+            return new MathMLCanonicalizer( Settings.getStreamFromProperty("defaultConfig") );
         } catch (ConfigException ex) {
             LOGGER.log(Level.SEVERE, "Failure loading default configuration", ex);
             throw new ConfigError("Creation of default canonicalizer failed", ex);
@@ -97,7 +97,10 @@ public final class MathMLCanonicalizer {
             IOUtils.copy(xmlConfigurationStream, baos);
             validateXMLConfiguration(new ByteArrayInputStream(baos.toByteArray()));
             loadXMLConfiguration(new ByteArrayInputStream(baos.toByteArray()));
-        } catch (XMLStreamException | IOException ex) {
+        } catch (XMLStreamException ex) {
+            LOGGER.log(Level.SEVERE, "cannot load configuration. ", ex);
+            throw new ConfigException("cannot load configuration", ex);
+        } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "cannot load configuration. ", ex);
             throw new ConfigException("cannot load configuration", ex);
         }
@@ -172,7 +175,8 @@ public final class MathMLCanonicalizer {
         assert xmlConfigurationStream != null;
         final SchemaFactory sf = Settings.xmlSchemaFactory();
         try {
-            final Schema schema = sf.newSchema(Settings.getResourceFromProperty("configSchema"));
+            final Schema schema = sf.newSchema( Settings.getResourceFromProperty("configSchema") );
+
             final Validator validator = schema.newValidator();
             validator.validate(new StreamSource(xmlConfigurationStream));
         } catch (SAXException ex) {
@@ -281,8 +285,7 @@ public final class MathMLCanonicalizer {
      * @throws JDOMException problem with DOM
      * @throws IOException problem with streams
      * @throws ModuleException some module cannot canonicalize the input
-     * @throws javax.xml.stream.XMLStreamException an error with XML processing
-     * occurs
+     * @throws javax.xml.stream.XMLStreamException an error with XML processing occurs
      */
     public void canonicalize(final InputStream in, final OutputStream out)
             throws JDOMException, IOException, ModuleException, XMLStreamException {
@@ -304,8 +307,9 @@ public final class MathMLCanonicalizer {
             streamModulesResult.writeTo(out);
             return;
         }
-        final InputStream input = streamModulesResult == null ? in : new ByteArrayInputStream(streamModulesResult.toByteArray());
 
+        final InputStream input = streamModulesResult==null ? in : new ByteArrayInputStream(streamModulesResult.toByteArray());
+        
         final Document document = executeDomModules(input);
 
         // convertong the JDOM representation back to stream
@@ -316,8 +320,7 @@ public final class MathMLCanonicalizer {
     /**
      * Alternative to {@link #canonicalize(InputStream, OutputStream)} method
      * for clients which need JDOM document any way.
-     *
-     * NB: maybe add another method which returns {@link org.w3c.dom.Document}?
+     * NB: maybe add another method which returns org.w3c.dom.Document?
      */
     public Document canonicalize(final InputStream in) throws ModuleException, IOException, XMLStreamException, JDOMException {
         if (in == null) {
@@ -325,11 +328,12 @@ public final class MathMLCanonicalizer {
         }
 
         ByteArrayOutputStream streamModulesResult = executeStreamModules(in);
-        final InputStream input = streamModulesResult == null ? in : new ByteArrayInputStream(streamModulesResult.toByteArray());
 
+        final InputStream input = streamModulesResult==null ? in : new ByteArrayInputStream(streamModulesResult.toByteArray());
+        
         return executeDomModules(input);
     }
-
+    
     private Document executeDomModules(final InputStream input) throws JDOMException, IOException, ModuleException {
         // creating the JDOM representation from the stream
         final SAXBuilder builder = Settings.setupSAXBuilder();
@@ -343,21 +347,21 @@ public final class MathMLCanonicalizer {
     }
 
     /**
-     * Returns result of stream modules execution or null if stream modules are
-     * not defined.
+     * Returns result of stream modules execution or null if
+     * stream modules are not defined.
      */
     private ByteArrayOutputStream executeStreamModules(final InputStream in)
             throws ModuleException, IOException, XMLStreamException {
-
+        
         if (streamModules.isEmpty()) {
             return null;
         }
-
+                
         ByteArrayOutputStream outputStream = null;
 
         // calling stream modules
         for (StreamModule module : streamModules) {
-            InputStream inputStream = outputStream == null
+            InputStream inputStream = outputStream==null
                     ? injectDtdsIfNecessary(in)
                     : new ByteArrayInputStream(outputStream.toByteArray());
 
@@ -372,14 +376,14 @@ public final class MathMLCanonicalizer {
 
     private ByteArrayOutputStream removeDtdsIfNecessary(final ByteArrayOutputStream outputStream) throws XMLStreamException {
         ByteArrayOutputStream result;
-
+        
         if (enforcingXHTMLPlusMathMLDTD) {
-            InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+            InputStream inputStream = new ByteArrayInputStream( outputStream.toByteArray() );
             result = DTDManipulator.removeDTDAndReturnOutputStream(inputStream);
         } else {
             result = outputStream;
         }
-
+        
         return result;
     }
 
@@ -394,9 +398,9 @@ public final class MathMLCanonicalizer {
     }
 
     /**
-     * Test whether this instance of {@link MathMLCanonicalizer} is injecting
-     * XHTML 1.1 plus MathML 2.0 plus SVG 1.1 DTD reference into any input
-     * document.
+     * Test whether this instance of
+     * <code>MathMLCanonicalizer</code> is injecting XHTML 1.1 plus MathML 2.0
+     * plus SVG 1.1 DTD reference into any input document.
      *
      * @return XHTML 1.1 plus MathML 2.0 plus SVG 1.1 DTD reference enforcement
      * setting
@@ -418,5 +422,4 @@ public final class MathMLCanonicalizer {
         enforcingXHTMLPlusMathMLDTD = mode;
 
     }
-
 }

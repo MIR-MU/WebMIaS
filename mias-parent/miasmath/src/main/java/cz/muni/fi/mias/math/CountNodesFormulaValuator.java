@@ -27,7 +27,7 @@ import org.w3c.dom.NodeList;
 public class CountNodesFormulaValuator implements FormulaValuator {
 
     @Override
-    public float count(Node n, MathTokenizer.MathMLType mmlType) {
+    public float value(Node n, MathTokenizer.MathMLType mmlType) {
         if (mmlType == MathTokenizer.MathMLType.BOTH) {
             mmlType = MathTokenizer.MathMLType.PRESENTATION;
         }
@@ -43,7 +43,7 @@ public class CountNodesFormulaValuator implements FormulaValuator {
                 }
                 NodeList nl = n.getChildNodes();
                 for (int i = 0; i < nl.getLength(); i++) {
-                    result += count(nl.item(i), mmlType);
+                    result += value(nl.item(i), mmlType);
                 }
                 if (count) {
                     result += 1.0;

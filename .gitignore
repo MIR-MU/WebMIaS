@@ -2,9 +2,15 @@
 *.iml
 
 /mias-parent/deployment/
+/mias-parent/mathml-canonicalizer/nb-configuration.xml
 /mias-parent/mathml-canonicalizer/target/
+/mias-parent/mathml-unificator/nb-configuration.xml
 /mias-parent/mathml-unificator/target/
+/mias-parent/mias/nb-configuration.xml
 /mias-parent/mias/target/
+/mias-parent/miasmath/nb-configuration.xml
 /mias-parent/miasmath/target/
+/mias-parent/nb-configuration.xml
 /mias-parent/target/
+/mias-parent/webmias/nb-configuration.xml
 /mias-parent/webmias/target/

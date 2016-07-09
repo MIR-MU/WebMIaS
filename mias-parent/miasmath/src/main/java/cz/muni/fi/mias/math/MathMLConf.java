@@ -23,8 +23,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import cz.muni.fi.mias.MIaSError;
 
@@ -35,7 +35,7 @@ import cz.muni.fi.mias.MIaSError;
  */
 public class MathMLConf {
 
-    private static final Logger log = Logger.getLogger(MathTokenizer.class.getName());
+    private static final Logger LOG = LogManager.getLogger(MathMLConf.class);
 
     private static final List<String> ignoreNode = Arrays.asList("semantics", "annotation-xml");
     private static final List<String> ignoreAll = Arrays.asList("annotation");
@@ -209,7 +209,7 @@ public class MathMLConf {
     }
 
     private static void handleError(String msg, Exception e) throws MIaSError {
-        log.log(Level.SEVERE, msg, e);
+        LOG.error(msg, e);
         throw new MIaSError(msg, e);
     }
 

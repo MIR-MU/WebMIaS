@@ -15,8 +15,8 @@
  */
 package cz.muni.fi.mias;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
  */
 public class MIaSMathUtils {
 
-    private static final Logger log = Logger.getLogger(MIaSMathUtils.class.getName());
+    private static final Logger LOG = LogManager.getLogger(MIaSMathUtils.class);
 
     private static final String MATHML_DTD = "/cz/muni/fi/mias/math/xhtml-math11-f.dtd";
 
@@ -43,7 +43,7 @@ public class MIaSMathUtils {
             @Override
             public InputSource resolveEntity(String publicId, String systemId)
                     throws SAXException, java.io.IOException {
-                log.log(Level.FINEST, "{0} {1}", new Object[]{publicId, systemId});
+                LOG.debug("{0} {1}", new Object[]{publicId, systemId});
                 if (systemId.endsWith("dtd")) {
                     return new InputSource(MIaSMathUtils.class.getResourceAsStream(MATHML_DTD));
                 } else {

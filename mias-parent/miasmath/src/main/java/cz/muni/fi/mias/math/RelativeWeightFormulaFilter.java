@@ -15,6 +15,9 @@
  */
 package cz.muni.fi.mias.math;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Formula filters deciding whether given {@link Formula} should be used or not.
  *
@@ -24,6 +27,11 @@ package cz.muni.fi.mias.math;
  * @author Michal Růžička
  */
 public class RelativeWeightFormulaFilter implements FormulaFilter {
+
+    /**
+     * Class activity logger.
+     */
+    private static final Logger LOG = LogManager.getLogger(RelativeWeightFormulaFilter.class);
 
     /**
      * Threshold of filtering. The formula passes the filter if
@@ -72,7 +80,10 @@ public class RelativeWeightFormulaFilter implements FormulaFilter {
      */
     @Override
     public boolean passes(Formula formula) {
-        return (formula.getWeight() / formula.getOriginalFormulaWeight()) >= filteringThreshold;
+        boolean result = (formula.getWeight() / formula.getOriginalFormulaWeight()) >= filteringThreshold;
+        LOG.debug("Formula weight {}, original formula weight {}, filtering threshold {} – result: {}",
+                formula.getWeight(), formula.getOriginalFormulaWeight(), filteringThreshold, result);
+        return result;
     }
 
     /**

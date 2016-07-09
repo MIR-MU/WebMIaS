@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.commons.io.input.ReaderInputStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -58,7 +58,7 @@ import java.util.Arrays;
  */
 public class MathTokenizer extends Tokenizer {
 
-    private static final Logger LOG = Logger.getLogger(MathTokenizer.class.getName());
+    private static final Logger LOG = LogManager.getLogger(MathTokenizer.class);
 
     public static final int TOKEN_TRIM_LENGTH = 20000;
 
@@ -158,7 +158,7 @@ public class MathTokenizer extends Tokenizer {
             String nodeString = nodeToString(f.getNode(), false);
             // Trim node string representation to fit Lucene index term max size
             if (nodeString.length() >= TOKEN_TRIM_LENGTH) {
-                LOG.warning("Node string representation too long (" + nodeString.length() + " chars), cut to " + TOKEN_TRIM_LENGTH + " chars.");
+                LOG.warn("Node string representation too long (" + nodeString.length() + " chars), cut to " + TOKEN_TRIM_LENGTH + " chars.");
                 nodeString.substring(0, TOKEN_TRIM_LENGTH);
             }
             termAtt.append(nodeString);
@@ -246,7 +246,7 @@ public class MathTokenizer extends Tokenizer {
 
             increment = formulaPosition - 1; // NB: itForms is set to empty iterator and so increment will get incremented by one in nextIt()
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, "Could not process formulae.", e);
+            LOG.error("Could not process formulae.", e);
         }
     }
 
@@ -257,7 +257,7 @@ public class MathTokenizer extends Tokenizer {
             org.jdom2.Document jdom2Doc = canonicalizer.canonicalize(new ReaderInputStream(input, "UTF-8"));
             doc = outputter.output(jdom2Doc);
         } catch (Exception e) {
-            LOG.log(Level.WARNING, "Input could not be parsed (probably it is not valid MathML)", e);
+            LOG.warn("Input could not be parsed (probably it is not valid MathML)", e);
             doc = null;
         }
 
@@ -383,7 +383,7 @@ public class MathTokenizer extends Tokenizer {
      */
     private void loadUnifiedNodes(Node n, float basicWeight, int position) {
         int nodeComplexity = (int) formulaComplexityValuator.value(n, mmlType);
-        LOG.finer("Loading node of input complexity " + nodeComplexity + " for unification.");
+        LOG.debug("Loading node of input complexity " + nodeComplexity + " for unification.");
         if (nodeComplexity <= MathMLConf.inputNodeComplexityUnificationLimit) {
             if (n.getNodeType() == Node.ELEMENT_NODE) {
                 HashMap<Integer, Node> unifiedMathMLNodes = MathMLUnificator.getUnifiedMathMLNodes(n, false);
@@ -699,7 +699,7 @@ public class MathTokenizer extends Tokenizer {
                             MathMLUnificator.replaceNodeWithUnificator(node);
                             result = true;
                         } catch (Exception ex) {
-                            LOG.log(Level.WARNING, "Replacing node with unificator failed: " + ex.getMessage(), ex);
+                            LOG.warn("Replacing node with unificator failed: " + ex.getMessage(), ex);
                         }
                     }
                 }

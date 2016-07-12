@@ -95,6 +95,20 @@ import="cz.muni.fi.webmias.Indexes"
                     </div>
                     <div class="nofloat"></div>
                 </form>
+                <c:if test="${debug eq true}">
+                    <form>
+                        <c:if test="${convertedCanonQuery!=null}">
+                            <div id="convertedCanonicalizedQuery">
+                                Converted and canonicalized query:
+                                <textarea name="query" cols="125" rows="8" readonly="true" ><c:out value="${convertedCanonQuery}" escapeXml="true"/></textarea>
+                            </div>
+                        </c:if>
+                        <c:if test="${luceneQuery!=null}">
+                            Lucene query:
+                            <textarea name="query" cols="125" rows="5" readonly="true" ><c:out value="${luceneQuery}" escapeXml="true"/></textarea>
+                        </c:if>
+                    </form>
+                </c:if>
 
                 <div class="results-container">
                     <c:if test="${!empty nores}">

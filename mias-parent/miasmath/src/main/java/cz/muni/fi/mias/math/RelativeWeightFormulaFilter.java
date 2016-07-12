@@ -56,6 +56,12 @@ public class RelativeWeightFormulaFilter implements FormulaFilter {
      * smaller weights will be rejected.
      */
     public RelativeWeightFormulaFilter(float filteringThreshold) {
+        if (filteringThreshold < 0.0f || filteringThreshold > 1.0f) {
+            throw new IllegalArgumentException(
+                    "Invalid threshold '"
+                    + filteringThreshold
+                    + "': value between 0.0f and 1.0f is required.");
+        }
         this.filteringThreshold = filteringThreshold;
     }
 

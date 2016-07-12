@@ -97,7 +97,7 @@ public class MathTokenizer extends Tokenizer {
     private final boolean addTrivialFormulae = false;
     // Alternatively you can filter formulae with too low weights:
     // // To the index add only formulae with relative weight comparing to their original formula greater or equal to 10%
-    // private final FormulaFilter formulaFilter = new RelativeWeightFormulaFilter(10.0f);
+    // private final FormulaFilter formulaFilter = new RelativeWeightFormulaFilter(0.10f);
     private final FormulaFilter formulaFilter = new NoFilteringFormulaFilter();
 
     // fields with state related to tokenization of current input;

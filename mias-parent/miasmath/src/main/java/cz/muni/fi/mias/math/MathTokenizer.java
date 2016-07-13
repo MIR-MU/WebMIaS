@@ -592,6 +592,13 @@ public class MathTokenizer extends Tokenizer {
     }
 
     /**
+     * Converts a node to pretty printed XML string representation
+     */
+    private String nodeToXMLString(Node node) {
+        return Formula.nodeToXMLString(node, MathMLConf.getIgnoreNode());
+    }
+
+    /**
      * Determines if nodes around Node i in given list of Nodes can be swapped.
      *
      * @param i number of Node in the given list that sorrounding are to be swap
@@ -851,6 +858,23 @@ public class MathTokenizer extends Tokenizer {
         for (List<Formula> forms : formulae.values()) {
             for (Formula f : forms) {
                 result.put(nodeToString(f.getNode(), false), f.getWeight());
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @return Processed formulae in pretty printed XML strings to be used for
+     * debuging representation of a query. No subformulae are extracted.
+     */
+    public Map<String, Float> getQueryXMLFormulae() {
+        Map<String, Float> result = new HashMap<>();
+        for (List<Formula> forms : formulae.values()) {
+            for (Formula f : forms) {
+                String xmlString = nodeToXMLString(f.getNode());
+                if (xmlString != null) {
+                    result.put(nodeToXMLString(f.getNode()), f.getWeight());
+                }
             }
         }
         return result;

@@ -15,6 +15,7 @@
  */
 package cz.muni.fi.mias.math;
 
+import cz.muni.fi.mir.mathmlunificator.utils.XMLOut;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -199,6 +200,23 @@ public class Formula {
             } else if (!withoutTextContent) {
                 builder.append("(").append(node.getTextContent()).append(")");
             }
+        }
+    }
+
+    /**
+     * Creates pretty printed string representation of XML of a MathML formula.
+     *
+     * @param node MathML with the formula
+     * @param ignorableNodes a list of MathML nodes which the output should not
+     * contain
+     * @return pretty printed XML string representing the input MathML formula
+     */
+    public static String nodeToXMLString(Node node, List<String> ignorableNodes) {
+        if (shouldIgnoreNode(node, ignorableNodes)) {
+            // do nothing
+            return null;
+        } else {
+            return XMLOut.xmlStringSerializer(node);
         }
     }
 

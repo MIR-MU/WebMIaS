@@ -22,12 +22,7 @@ import cz.muni.fi.mias.math.MathTokenizer;
 import cz.muni.fi.mias.math.MathTokenizer.MathMLType;
 import cz.muni.fi.mias.search.Result;
 import cz.muni.fi.mias.search.SearchResult;
-import cz.muni.fi.mir.mathmlcanonicalization.MathMLCanonicalizer;
-import cz.muni.fi.mir.mathmlcanonicalization.modules.ModuleException;
-import cz.muni.fi.mir.mathmlunificator.MathMLUnificator;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -42,10 +37,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.stream.XMLStreamException;
 import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.lucene.search.IndexSearcher;
-import org.jdom2.JDOMException;
 
 /**
  * @author Martin Liska
@@ -117,24 +110,12 @@ public class ProcessServlet extends HttpServlet {
             if (sep[0] != null && !sep[0].isEmpty()) {
                 query += " " + TeXConverter.convertTexLatexML(sep[0]);
             }
-            String convertedQuery = query;
-            try {
-                ByteArrayOutputStream canonOut = new ByteArrayOutputStream();
-                MathMLCanonicalizer canonicalizer = MathMLCanonicalizer.getDefaultCanonicalizer();
-                canonicalizer.canonicalize(new ByteArrayInputStream(("<html>" + query + "</html>").getBytes("UTF-8")), canonOut);
-                ByteArrayOutputStream unificationOut = new ByteArrayOutputStream();
-                MathMLUnificator.unifyMathML(new ByteArrayInputStream(canonOut.toByteArray()), unificationOut, false);
-                convertedQuery = unificationOut.toString("UTF-8");
-                convertedQuery = convertedQuery.substring(convertedQuery.indexOf("<html>") + 6, convertedQuery.indexOf("</html>"));
-                request.setAttribute("convertedCanonQuery", convertedQuery);
-            } catch (XMLStreamException | ModuleException | JDOMException ex) {
-                Logger.getLogger(ProcessServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
             s = new Searching(searcher, currentIndexDef.getStorage());
             page = page == 0 ? page : page - 1;
             SearchResult searchResult = s.search(query, false, page * resPerPage, resPerPage, debug, mmlType);
             int totalResults = searchResult.getTotalResults();
+            request.setAttribute("processedQuery", searchResult.getProcessedQuery());
             request.setAttribute("luceneQuery", searchResult.getLuceneQuery());
             request.setAttribute("total", searchResult.getTotalResults());
             request.setAttribute("coreTime", searchResult.getCoreSearchTime());

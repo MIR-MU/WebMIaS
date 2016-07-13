@@ -97,10 +97,10 @@ import="cz.muni.fi.webmias.Indexes"
                 </form>
                 <c:if test="${debug eq true}">
                     <form>
-                        <c:if test="${convertedCanonQuery!=null}">
-                            <div id="convertedCanonicalizedQuery">
-                                Converted and canonicalized query:
-                                <textarea name="query" cols="125" rows="8" readonly="true" ><c:out value="${convertedCanonQuery}" escapeXml="true"/></textarea>
+                        <c:if test="${processedQuery!=null}">
+                            <div id="processedQuery">
+                                Processed query:
+                                <textarea name="query" cols="125" rows="50" readonly="true" ><c:out value="${processedQuery}" escapeXml="true"/></textarea>
                             </div>
                         </c:if>
                         <c:if test="${luceneQuery!=null}">

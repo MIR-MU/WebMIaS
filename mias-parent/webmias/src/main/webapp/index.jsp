@@ -77,8 +77,14 @@ import="cz.muni.fi.webmias.Indexes"
                                 </select>
                             </div>
                             <div class="search-option">
-                                Verbose output:
-                                <input type="checkbox" id="debug" name="debug" value="true" <c:if test="${debug eq true}">checked="checked"</c:if> />                            
+                                <div>
+                                    Verbose output:
+                                    <input type="checkbox" id="debug" name="debug" value="true" <c:if test="${debug eq true}">checked="checked"</c:if> />
+                                </div>
+                                <div>
+                                    Indexing-like query formulae processing:
+                                    <input type="checkbox" id="indexinglikequeryproc" name="indexinglikequeryproc" value="true" <c:if test="${indexinglikequeryproc eq true}">checked="checked"</c:if> />
+                                </div>
                             </div>
                         </div>
                         <div id="visualQueryContainer">

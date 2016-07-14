@@ -51,7 +51,7 @@ public class UnifiedFormulaValuator implements FormulaValuator {
         Integer maxLevel = ul.getMaxLevel() + 1; // We add 1 for the original formula that is not included in the number of levels.
 
         if (level != null && maxLevel != null && level > 0 && maxLevel > 0) {
-            return (unifiedNodeWeightCoefModifier * ((float) (maxLevel - level) / maxLevel)) / ((float) Math.pow(level, 3));
+            return unifiedNodeWeightCoefModifier * (((float) (maxLevel - level) / maxLevel) / ((float) Math.pow(level, 7)));
         } else {
             return 1.0f;
         }

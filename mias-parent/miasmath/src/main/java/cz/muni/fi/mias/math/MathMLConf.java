@@ -67,7 +67,7 @@ public class MathMLConf {
      *
      * @see UnifiedFormulaValuator
      */
-    public static final float unifiedNodeWeightCoefModifier = 0.1f;
+    public static final float unifiedNodeWeightCoefModifier = 0.025f;
 
     /**
      * Threshold of input node complexity (i.e. the number of subnodes of the

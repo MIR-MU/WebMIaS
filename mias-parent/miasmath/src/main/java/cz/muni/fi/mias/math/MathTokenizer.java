@@ -83,12 +83,19 @@ public class MathTokenizer extends Tokenizer {
     private final DOMOutputter outputter = new DOMOutputter();
 
     // configuration
+    /** level coeficient */
     private float lCoef = 0.7f;
+    /** variable unification coeficient */
     private float vCoef = 0.8f;
-    private final float vCoefGen = 0.03f;
+    /** additional coeficient for variable unification not keeping alpha equivalence */
+    private float vCoefGen = 0.03f;
+    /** constant unification coeficient */
     private float cCoef = 0.5f;
-    private final float oCoef = 0.8f;
-    private final float aCoef = 1.0f;
+    /** operator unification coeficient */
+    private float oCoef = 0.75f;
+    /** formulae with kept attributes boost coeficient */
+    private float aCoef = 1.0f;
+    /** generate subformulae? ({@code true} for indexing, {@code false} for searching) */
     private final boolean subformulae;
     private final MathMLType mmlType;
     private int formulaPosition = 1;
@@ -128,12 +135,16 @@ public class MathTokenizer extends Tokenizer {
         super(input);
 
         this.mmlType = type;
-
         this.subformulae = subformulae;
-        if (!subformulae) {
+
+        // For search do not penalize any of formulae we search with
+        if (!this.subformulae) {
             lCoef = 1;
             vCoef = 1;
+            vCoefGen = 1;
             cCoef = 1;
+            oCoef = 1;
+            aCoef = 1;
         }
     }
 
@@ -331,7 +342,14 @@ public class MathTokenizer extends Tokenizer {
         for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
             formulae.put(i, new ArrayList<>());
-            float rank = subformulae ? (1 / inputFormulaValuator.value(node, mmlType)) : inputFormulaValuator.value(node, mmlType);
+            float rank;
+            if (subformulae) {
+                // For indexing reduce weight of complex formulae
+                rank = 1 / inputFormulaValuator.value(node, mmlType);
+            } else {
+                // For search increse weight of complex formulae
+                rank = inputFormulaValuator.value(node, mmlType);
+            }
             loadNode(node, rank, i);
         }
     }
@@ -389,8 +407,15 @@ public class MathTokenizer extends Tokenizer {
                 HashMap<Integer, Node> unifiedMathMLNodes = MathMLUnificator.getUnifiedMathMLNodes(n, false);
                 for (int uniLevel : unifiedMathMLNodes.keySet()) {
                     Node un = unifiedMathMLNodes.get(uniLevel);
-                    float nodeWeightCoef = unifiedNodeValuator.value(un, mmlType);
-                    float weight = basicWeight * nodeWeightCoef;
+                    float weight;
+                    if (subformulae) {
+                        // For indexing reduce weight unified formulae
+                        float nodeWeightCoef = unifiedNodeValuator.value(un, mmlType);
+                        weight = basicWeight * nodeWeightCoef;
+                    } else {
+                        // For search do not penalize any of formulae we search with
+                        weight = basicWeight;
+                    }
                     addFormula(position, new Formula(un, weight, basicWeight));
                 }
             }

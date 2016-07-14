@@ -88,7 +88,7 @@ public class MathTokenizer extends Tokenizer {
     private final float vCoefGen = 0.03f;
     private float cCoef = 0.5f;
     private final float oCoef = 0.8f;
-    private final float aCoef = 1.2f;
+    private final float aCoef = 1.0f;
     private final boolean subformulae;
     private final MathMLType mmlType;
     private int formulaPosition = 1;

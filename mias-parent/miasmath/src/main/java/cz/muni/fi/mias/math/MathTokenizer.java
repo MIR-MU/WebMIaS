@@ -350,7 +350,8 @@ public class MathTokenizer extends Tokenizer {
                 // For search increse weight of complex formulae
                 rank = inputFormulaValuator.value(node, mmlType);
             }
-            loadNode(node, rank, i);
+            // Top-level formula – initial and original formula rank are equivalent
+            loadNode(node, rank, rank, i);
         }
     }
 
@@ -359,10 +360,14 @@ public class MathTokenizer extends Tokenizer {
      * nodes to the formuale1 map.
      *
      * @param n Node current MathML node.
-     * @param level current depth in the original formula tree which is also
-     * rank of the this Node
+     * @param rank rank of the current node, depends on current depth of the
+     * node in the original formula tree
+     * @param originalRank rank of the top-most formula (the original input
+     * formula) this node was derived from
+     * @param position position (id) of the original input formula (the formula
+     * this formula was derived from) in list of input formulae
      */
-    private void loadNode(Node n, float level, int position) {
+    private void loadNode(Node n, float rank, float originalRank, int position) {
         if (n instanceof Element) {
             String name = n.getLocalName();
             if (!MathMLConf.ignoreNodeAndChildren(name)) {
@@ -378,12 +383,12 @@ public class MathTokenizer extends Tokenizer {
                 if (subformulae || !store) {
                     for (int j = 0; j < length; j++) {
                         Node node = nl.item(j);
-                        loadNode(node, store ? level * lCoef : level, position);
+                        loadNode(node, store ? rank * lCoef : rank, originalRank, position);
                     }
                 }
                 if (store && !MathMLConf.ignoreNode(name)) {
-                    addFormula(position, new Formula(n, level, level));
-                    loadUnifiedNodes(n, level, position);
+                    addFormula(position, new Formula(n, rank, originalRank));
+                    loadUnifiedNodes(n, rank, originalRank, position);
                 }
             }
         }
@@ -395,11 +400,13 @@ public class MathTokenizer extends Tokenizer {
      * variants and adds them to the formulae map.
      *
      * @param n Node current MathML node.
-     * @param basicRank current depth in the original formula tree which is also
-     * rank of the this Node
+     * @param basicWeight rank of the current node, depends on current depth of the
+     * node in the original formula tree
+     * @param originalWeight rank of the top-most formula (the original input
+     * formula) this node was derived from
      * @param position position of the original formula in the map of formulae
      */
-    private void loadUnifiedNodes(Node n, float basicWeight, int position) {
+    private void loadUnifiedNodes(Node n, float basicWeight, float originalWeight, int position) {
         int nodeComplexity = (int) formulaComplexityValuator.value(n, mmlType);
         LOG.debug("Loading node of input complexity " + nodeComplexity + " for unification.");
         if (nodeComplexity <= MathMLConf.inputNodeComplexityUnificationLimit) {
@@ -416,7 +423,7 @@ public class MathTokenizer extends Tokenizer {
                         // For search do not penalize any of formulae we search with
                         weight = basicWeight;
                     }
-                    addFormula(position, new Formula(un, weight, basicWeight));
+                    addFormula(position, new Formula(un, weight, originalWeight));
                 }
             }
         } else {

@@ -84,13 +84,13 @@ public class MathTokenizer extends Tokenizer {
 
     // configuration
     /** level coeficient */
-    private float lCoef = 0.7f;
+    private float lCoef = 0.55f;
     /** variable unification coeficient */
     private float vCoef = 0.8f;
     /** additional coeficient for variable unification not keeping alpha equivalence */
     private float vCoefGen = 0.03f;
     /** constant unification coeficient */
-    private float cCoef = 0.5f;
+    private float cCoef = 0.7f;
     /** operator unification coeficient */
     private float oCoef = 0.75f;
     /** formulae with kept attributes boost coeficient */

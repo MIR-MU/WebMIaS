@@ -26,10 +26,7 @@ import="cz.muni.fi.webmias.Indexes"
                 <a href="about.html#contact" >Contact</a>
             </div>
             <div id="main-container">
-                <a id="logo" href="<c:url var="pageUrl" value="ps">
-                       <c:param name="qc" value="${qc}" />
-                   </c:url>">
-                </a>
+                <a id="logo" href="${pageContext.request.contextPath}/" />
 
                 <form action="${pageContext.request.contextPath}/ps" method="post"
                       onsubmit="buildQuery();
@@ -102,7 +99,7 @@ import="cz.muni.fi.webmias.Indexes"
                             <input type="hidden" name="n" value="0" />
                             <input type="hidden" name="query" />
                             <input type="hidden" name="qc" value="<c:out value="${qc}"/>" />
-                    </div>
+                        </div>
                     <div class="nofloat"></div>
                 </form>
                 <c:if test="${debug eq true}">

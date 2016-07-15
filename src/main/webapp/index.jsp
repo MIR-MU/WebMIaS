@@ -152,13 +152,13 @@ import="cz.muni.fi.webmias.Indexes"
                                 </div>
                         </c:forEach>
                         <c:forEach items="${pages}" var="pageNo">
-                            <c:url var="pageUrl" value="ps">
-                                <c:param name="query" value="${query}" />
-                                <c:param name="index" value="${index}" />
-                                <c:param name="n" value="${pageNo}" />
-                                <c:param name="qc" value="${qc}" />
-                            </c:url>
-                            <a href="<c:out value="${pageUrl}"/>">${pageNo}</a>
+                            <form action="${pageContext.request.contextPath}/ps" method="post" style="display: inline">
+                                <a href="#${pageNo}" onclick="$(this).closest('form').submit(); return false;">${pageNo}</a>
+                                <input type="hidden" name="query" value="${query}" />
+                                <input type="hidden" name="index" value="${index}" />
+                                <input type="hidden" name="n" value="${pageNo}" />
+                                <input type="hidden" name="qc" value="<c:out value="${qc}"/>" />
+                            </form>
                         </c:forEach>
                     </c:if>
                 </div>

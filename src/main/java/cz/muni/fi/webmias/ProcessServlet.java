@@ -83,7 +83,8 @@ public class ProcessServlet extends HttpServlet {
         int page = Integer.parseInt(request.getParameter("n"));
         String query = request.getParameter(QUERY_PARAMETER);
         boolean debug = request.getParameter("debug") != null;
-        boolean indexinglikequeryproc = request.getParameter("indexinglikequeryproc") != null;
+        boolean extractSubformulae = request.getParameter("extractSubformulae") != null;
+        boolean reduceWeighting = request.getParameter("reduceWeighting") != null;
         String indexNo = request.getParameter("index");
         int indexNumber = 0;
         if (indexNo != null) {
@@ -98,7 +99,8 @@ public class ProcessServlet extends HttpServlet {
         request.setAttribute("index", indexNumber);
         request.setAttribute(QUERY_PARAMETER, query);
         request.setAttribute("debug", debug);
-        request.setAttribute("indexinglikequeryproc", indexinglikequeryproc);
+        request.setAttribute("extractSubformulae", extractSubformulae);
+        request.setAttribute("reduceWeighting", reduceWeighting);
         request.setAttribute("qc", qc);
         request.setAttribute("variant", variant);
         request.setAttribute("forbidden", forbidden);
@@ -115,7 +117,7 @@ public class ProcessServlet extends HttpServlet {
 
             s = new Searching(searcher, currentIndexDef.getStorage());
             page = page == 0 ? page : page - 1;
-            SearchResult searchResult = s.search(query, false, page * resPerPage, resPerPage, debug, mmlType, indexinglikequeryproc);
+            SearchResult searchResult = s.search(query, false, page * resPerPage, resPerPage, debug, mmlType, extractSubformulae, reduceWeighting);
             int totalResults = searchResult.getTotalResults();
             request.setAttribute("processedQuery", searchResult.getProcessedQuery());
             request.setAttribute("luceneQuery", searchResult.getLuceneQuery());

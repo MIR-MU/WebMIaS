@@ -82,8 +82,12 @@ import="cz.muni.fi.webmias.Indexes"
                                     <input type="checkbox" id="debug" name="debug" value="true" <c:if test="${debug eq true}">checked="checked"</c:if> />
                                 </div>
                                 <div>
-                                    Indexing-like query formulae processing:
-                                    <input type="checkbox" id="indexinglikequeryproc" name="indexinglikequeryproc" value="true" <c:if test="${indexinglikequeryproc eq true}">checked="checked"</c:if> />
+                                    Extract subformulae:
+                                    <input type="checkbox" id="extractSubformulae" name="extractSubformulae" value="true" <c:if test="${extractSubformulae eq true}">checked="checked"</c:if> />
+                                </div>
+                                <div>
+                                    Reduce weights of derived formulae:
+                                    <input type="checkbox" id="reduceWeighting" name="reduceWeighting" value="true" <c:if test="${reduceWeighting eq true}">checked="checked"</c:if> />
                                 </div>
                             </div>
                         </div>

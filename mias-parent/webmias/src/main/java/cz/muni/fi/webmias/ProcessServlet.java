@@ -142,11 +142,7 @@ public class ProcessServlet extends HttpServlet {
                 request.setAttribute("nores", "No results.");
             }
         }
-        if (qc != null) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("/index-dev.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     private void logQuery(HttpServletRequest request, String query) {

@@ -83,20 +83,41 @@ public class MathTokenizer extends Tokenizer {
     private final DOMOutputter outputter = new DOMOutputter();
 
     // configuration
-    /** level coeficient */
+    /**
+     * level coeficient
+     */
     private float lCoef = 0.55f;
-    /** variable unification coeficient */
+    /**
+     * variable unification coeficient
+     */
     private float vCoef = 0.8f;
-    /** additional coeficient for variable unification not keeping alpha equivalence */
+    /**
+     * additional coeficient for variable unification not keeping alpha
+     * equivalence
+     */
     private float vCoefGen = 0.03f;
-    /** constant unification coeficient */
+    /**
+     * constant unification coeficient
+     */
     private float cCoef = 0.7f;
-    /** operator unification coeficient */
+    /**
+     * operator unification coeficient
+     */
     private float oCoef = 0.75f;
-    /** formulae with kept attributes boost coeficient */
+    /**
+     * formulae with kept attributes boost coeficient
+     */
     private float aCoef = 1.0f;
-    /** generate subformulae? ({@code true} for indexing, {@code false} for searching) */
+    /**
+     * generate subformulae? ({@code true} for indexing, {@code false} for
+     * searching)
+     */
     private final boolean subformulae;
+    /**
+     * to reduce weight of derived subformulae (i.e. variants with unified
+     * variables, constants, extracted subformulae etc.)?
+     */
+    private final boolean reduceWeighting;
     private final MathMLType mmlType;
     private int formulaPosition = 1;
 
@@ -128,17 +149,36 @@ public class MathTokenizer extends Tokenizer {
 
     /**
      * @param input Reader containing the input to process
-     * @param subformulae if true, subformulae will be extracted
+     * @param subformulae if <em>{@code true}, subformulae will be
+     * extracted</em> and weight of derived subformulae (i.e. extracted
+     * subformulae, variants with unified variables, constants etc.) <em>will be
+     * reduced</em>; if <em>{@code false}, only top level formulae will be
+     * processed</em> and weight of their modified variants (variable
+     * unification etc. only, no subformulae extraction!) <em>will not be
+     * reduced</em>.
      * @param type type of MathML that should be processed
      */
     public MathTokenizer(Reader input, boolean subformulae, MathMLType type) {
+        this(input, subformulae, type, subformulae);
+    }
+
+    /**
+     * @param input Reader containing the input to process
+     * @param subformulae if {@code true}, subformulae will be extracted
+     * @param type type of MathML that should be processed
+     * @param reduceWeighting if {@code true}, reduce weight of derived
+     * subformulae (i.e. variants with unified variables, constants, extracted
+     * subformulae etc.)
+     */
+    public MathTokenizer(Reader input, boolean subformulae, MathMLType type, boolean reduceWeighting) {
         super(input);
 
         this.mmlType = type;
         this.subformulae = subformulae;
+        this.reduceWeighting = reduceWeighting;
 
-        // For search do not penalize any of formulae we search with
-        if (!this.subformulae) {
+        // For search or equal weighting do not penalize any of formulae we search with
+        if (!this.reduceWeighting) {
             lCoef = 1;
             vCoef = 1;
             vCoefGen = 1;
@@ -343,11 +383,11 @@ public class MathTokenizer extends Tokenizer {
             Node node = list.item(i);
             formulae.put(i, new ArrayList<>());
             float rank;
-            if (subformulae) {
-                // For indexing reduce weight of complex formulae
+            if (reduceWeighting) {
+                // For indexing or reduced weighting reduce weight of complex formulae
                 rank = 1 / inputFormulaValuator.value(node, mmlType);
             } else {
-                // For search increse weight of complex formulae
+                // For search or equal weighting increse weight of complex formulae
                 rank = inputFormulaValuator.value(node, mmlType);
             }
             // Top-level formula – initial and original formula rank are equivalent
@@ -400,8 +440,8 @@ public class MathTokenizer extends Tokenizer {
      * variants and adds them to the formulae map.
      *
      * @param n Node current MathML node.
-     * @param basicWeight rank of the current node, depends on current depth of the
-     * node in the original formula tree
+     * @param basicWeight rank of the current node, depends on current depth of
+     * the node in the original formula tree
      * @param originalWeight rank of the top-most formula (the original input
      * formula) this node was derived from
      * @param position position of the original formula in the map of formulae
@@ -415,12 +455,12 @@ public class MathTokenizer extends Tokenizer {
                 for (int uniLevel : unifiedMathMLNodes.keySet()) {
                     Node un = unifiedMathMLNodes.get(uniLevel);
                     float weight;
-                    if (subformulae) {
-                        // For indexing reduce weight unified formulae
+                    if (reduceWeighting) {
+                        // For indexing or reduced weighting reduce weight of unified formulae
                         float nodeWeightCoef = unifiedNodeValuator.value(un, mmlType);
                         weight = basicWeight * nodeWeightCoef;
                     } else {
-                        // For search do not penalize any of formulae we search with
+                        // For search or equal weighting do not penalize any of formulae we search with
                         weight = basicWeight;
                     }
                     addFormula(position, new Formula(un, weight, originalWeight));

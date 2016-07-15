@@ -151,15 +151,65 @@ import="cz.muni.fi.webmias.Indexes"
                                 <a class="cached-file" target="_blank" data-url="${res.id}" data-href="<c:if test="${forbidden}">forbidden.jsp</c:if><c:if test="${!forbidden}">cached?index=${index}&amp;path=${res.id}</c:if>">cached XHTML</a>
                                 </div>
                         </c:forEach>
-                        <c:forEach items="${pages}" var="pageNo">
+                        <c:if test="${n - 4 ge 1}">
                             <form action="${pageContext.request.contextPath}/ps" method="post" style="display: inline">
-                                <a href="#${pageNo}" onclick="$(this).closest('form').submit(); return false;">${pageNo}</a>
-                                <input type="hidden" name="query" value="${query}" />
-                                <input type="hidden" name="index" value="${index}" />
-                                <input type="hidden" name="n" value="${pageNo}" />
+                                <a href="#1" onclick="$(this).closest('form').submit(); return false;">1</a>
+                                <span> ... </span>
+                                <input type="hidden" name="query" value="<c:out value="${query}"/>" />
+                                <input type="hidden" name="variant" value="<c:out value="${variant}"/>" />
+                                <input type="hidden" name="index" value="<c:out value="${index}"/>" />
+                                <input type="hidden" name="n" value="1" />
                                 <input type="hidden" name="qc" value="<c:out value="${qc}"/>" />
+                                <c:if test="${debug eq true}">
+                                    <input type="hidden" name="debug" value="<c:out value="${debug}"/>" />
+                                </c:if>
+                                <c:if test="${extractSubformulae eq true}">
+                                    <input type="hidden" name="extractSubformulae" value="<c:out value="${extractSubformulae}"/>" />
+                                </c:if>
+                                <c:if test="${reduceWeighting eq true}">
+                                    <input type="hidden" name="reduceWeighting" value="<c:out value="${reduceWeighting}"/>" />
+                                </c:if>
+                            </form>
+                        </c:if>
+                        <c:forEach items="${pages}" var="pageNo" begin="${Math.max(n - 4, 0)}" end="${Math.min(n + 4, fn:length(pages) - 2)}">
+                            <form action="${pageContext.request.contextPath}/ps" method="post" style="display: inline">
+                                <a href="#${pageNo}" onclick="$(this).closest('form').submit(); return false;"><c:if test="${pageNo == n + 1}"><b></c:if>${pageNo}<c:if test="${pageNo == n + 1}"></b></c:if></a>
+                                <input type="hidden" name="query" value="<c:out value="${query}"/>" />
+                                <input type="hidden" name="variant" value="<c:out value="${variant}"/>" />
+                                <input type="hidden" name="index" value="<c:out value="${index}"/>" />
+                                <input type="hidden" name="n" value="<c:out value="${pageNo}"/>" />
+                                <input type="hidden" name="qc" value="<c:out value="${qc}"/>" />
+                                <c:if test="${debug eq true}">
+                                    <input type="hidden" name="debug" value="<c:out value="${debug}"/>" />
+                                </c:if>
+                                <c:if test="${extractSubformulae eq true}">
+                                    <input type="hidden" name="extractSubformulae" value="<c:out value="${extractSubformulae}"/>" />
+                                </c:if>
+                                <c:if test="${reduceWeighting eq true}">
+                                    <input type="hidden" name="reduceWeighting" value="<c:out value="${reduceWeighting}"/>" />
+                                </c:if>
                             </form>
                         </c:forEach>
+                        <c:if test="${n + 4 le fn:length(pages) - 3}">
+                            <form action="${pageContext.request.contextPath}/ps" method="post" style="display: inline">
+                                <span> ... </span>
+                                <a href="#<c:out value="${fn:length(pages) - 1}"/>" onclick="$(this).closest('form').submit(); return false;"><c:out value="${fn:length(pages) - 1}"/></a>
+                                <input type="hidden" name="query" value="<c:out value="${query}"/>" />
+                                <input type="hidden" name="variant" value="<c:out value="${variant}"/>" />
+                                <input type="hidden" name="index" value="<c:out value="${index}"/>" />
+                                <input type="hidden" name="n" value="<c:out value="${fn:length(pages) - 1}"/>" />
+                                <input type="hidden" name="qc" value="<c:out value="${qc}"/>" />
+                                <c:if test="${debug eq true}">
+                                    <input type="hidden" name="debug" value="<c:out value="${debug}"/>" />
+                                </c:if>
+                                <c:if test="${extractSubformulae eq true}">
+                                    <input type="hidden" name="extractSubformulae" value="<c:out value="${extractSubformulae}"/>" />
+                                </c:if>
+                                <c:if test="${reduceWeighting eq true}">
+                                    <input type="hidden" name="reduceWeighting" value="<c:out value="${reduceWeighting}"/>" />
+                                </c:if>
+                            </form>
+                        </c:if>
                     </c:if>
                 </div>
             </div>

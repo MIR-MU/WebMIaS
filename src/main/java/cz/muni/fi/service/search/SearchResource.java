@@ -45,7 +45,12 @@ public class SearchResource {
 
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    public Results search(@QueryParam(value = "query") String query, @QueryParam(value = "offset") int offset, @QueryParam(value = "limit") int limit, @QueryParam(value = "index") int indexNo) {
+    public Results search(@QueryParam(value = "query") String query,
+            @QueryParam(value = "offset") int offset,
+            @QueryParam(value = "limit") int limit,
+            @QueryParam(value = "index") int indexNo,
+            @QueryParam(value = "extractSubformulae") boolean extractSubformulae,
+            @QueryParam(value = "reduceWeighting") boolean reduceWeighting) {
         if (limit > LIMIT || limit <= 0) {
             limit = LIMIT;
         }
@@ -59,7 +64,7 @@ public class SearchResource {
         IndexDef indexDef = Indexes.getIndexDef(indexNo);
         IndexSearcher is = indexDef.getIndexSearcher();
         Searching s = new Searching(is, indexDef.getStorage());
-        SearchResult result = s.search(convertedQuery, false, offset, limit, false);
+        SearchResult result = s.search(convertedQuery, false, offset, limit, false, extractSubformulae, reduceWeighting);
         r.setTime(result.getTotalSearchTime());
         r.setTotalResults(result.getTotalResults());
         r.setItemsPerPage(limit);
@@ -71,7 +76,12 @@ public class SearchResource {
 
     @POST
     @Produces(MediaType.APPLICATION_XML)
-    public Results searchPost(@FormParam(value = "query") String query, @FormParam(value = "offset") int offset, @FormParam(value = "limit") int limit, @FormParam(value = "index") int indexNo) {
-        return search(query, offset, limit, indexNo);
+    public Results searchPost(@FormParam(value = "query") String query,
+            @FormParam(value = "offset") int offset,
+            @FormParam(value = "limit") int limit,
+            @FormParam(value = "index") int indexNo,
+            @QueryParam(value = "extractSubformulae") boolean extractSubformulae,
+            @QueryParam(value = "reduceWeighting") boolean reduceWeighting) {
+        return search(query, offset, limit, indexNo, extractSubformulae, reduceWeighting);
     }
 }

@@ -171,7 +171,7 @@ import="cz.muni.fi.webmias.Indexes"
                                 </c:if>
                             </form>
                         </c:if>
-                        <c:forEach items="${pages}" var="pageNo" begin="${Math.max(n - 4, 0)}" end="${Math.min(n + 4, fn:length(pages) - 2)}">
+                        <c:forEach items="${pages}" var="pageNo" begin="${Math.max(n - 4, 0)}" end="${Math.min(n + 4, Math.max(fn:length(pages) - 2, 0))}">
                             <form action="${pageContext.request.contextPath}/ps" method="post" style="display: inline">
                                 <a href="#${pageNo}" onclick="$(this).closest('form').submit(); return false;"><c:if test="${pageNo == n + 1}"><b></c:if>${pageNo}<c:if test="${pageNo == n + 1}"></b></c:if></a>
                                 <input type="hidden" name="query" value="<c:out value="${query}"/>" />
@@ -193,11 +193,11 @@ import="cz.muni.fi.webmias.Indexes"
                         <c:if test="${n + 4 le fn:length(pages) - 3}">
                             <form action="${pageContext.request.contextPath}/ps" method="post" style="display: inline">
                                 <span> ... </span>
-                                <a href="#<c:out value="${fn:length(pages) - 1}"/>" onclick="$(this).closest('form').submit(); return false;"><c:out value="${fn:length(pages) - 1}"/></a>
+                                <a href="#<c:out value="${Math.max(fn:length(pages) - 1, 0)}"/>" onclick="$(this).closest('form').submit(); return false;"><c:out value="${Math.max(fn:length(pages) - 1, 0)}"/></a>
                                 <input type="hidden" name="query" value="<c:out value="${query}"/>" />
                                 <input type="hidden" name="variant" value="<c:out value="${variant}"/>" />
                                 <input type="hidden" name="index" value="<c:out value="${index}"/>" />
-                                <input type="hidden" name="n" value="<c:out value="${fn:length(pages) - 1}"/>" />
+                                <input type="hidden" name="n" value="<c:out value="${Math.max(fn:length(pages) - 1, 0)}"/>" />
                                 <input type="hidden" name="qc" value="<c:out value="${qc}"/>" />
                                 <c:if test="${debug eq true}">
                                     <input type="hidden" name="debug" value="<c:out value="${debug}"/>" />

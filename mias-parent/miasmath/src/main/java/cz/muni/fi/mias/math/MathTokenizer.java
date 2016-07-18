@@ -209,7 +209,7 @@ public class MathTokenizer extends Tokenizer {
             String nodeString = nodeToString(f.getNode(), false);
             // Trim node string representation to fit Lucene index term max size
             if (nodeString.length() >= TOKEN_TRIM_LENGTH) {
-                LOG.warn("Node string representation too long (" + nodeString.length() + " chars), cut to " + TOKEN_TRIM_LENGTH + " chars.");
+                LOG.warn("Node string representation too long ({} chars), cut to {} chars.",nodeString.length(),TOKEN_TRIM_LENGTH);
                 nodeString.substring(0, TOKEN_TRIM_LENGTH);
             }
             termAtt.append(nodeString);
@@ -270,10 +270,6 @@ public class MathTokenizer extends Tokenizer {
      * formula is w3c.dom.Node.
      *
      * @param input InputStream with the formuale.
-     * @return Collection of the formulae in the form of Map&lt;Double,
-     * List&lt;String&gt;&gt;. this map gives pairs {created formula, it's
-     * rank}. Key of the map is the rank of the all formulae located in the list
-     * specified by the value of the Map.Entry.
      */
     private void processFormulae(Reader input) {
         try {
@@ -324,23 +320,19 @@ public class MathTokenizer extends Tokenizer {
             return true;
         }
         // Single variable/number/operator
-        if (node.getChildNodes().getLength() == 1
+        return node.getChildNodes().getLength() == 1
                 && node.getChildNodes().item(0).getNodeType() == Node.TEXT_NODE
                 && node.getLocalName() != null
                 && Arrays.asList(
-                        MathMLConstants.PMML_MI,
-                        MathMLConstants.PMML_MO,
-                        MathMLConstants.PMML_MN,
-                        MathMLConstants.CMML_CI,
-                        MathMLConstants.CMML_CN,
-                        MathMLConstants.CMML_CSYMBOL,
-                        MathMLConstants.CMML_PLUS,
-                        MathMLConstants.CMML_TIMES
-                ).contains(node.getLocalName())) {
-            return true;
-        }
-
-        return false;
+                MathMLConstants.PMML_MI,
+                MathMLConstants.PMML_MO,
+                MathMLConstants.PMML_MN,
+                MathMLConstants.CMML_CI,
+                MathMLConstants.CMML_CN,
+                MathMLConstants.CMML_CSYMBOL,
+                MathMLConstants.CMML_PLUS,
+                MathMLConstants.CMML_TIMES
+        ).contains(node.getLocalName());
 
     }
 
@@ -448,7 +440,7 @@ public class MathTokenizer extends Tokenizer {
      */
     private void loadUnifiedNodes(Node n, float basicWeight, float originalWeight, int position) {
         int nodeComplexity = (int) formulaComplexityValuator.value(n, mmlType);
-        LOG.debug("Loading node of input complexity " + nodeComplexity + " for unification.");
+        LOG.debug("Loading node of input complexity {} for unification.",nodeComplexity);
         if (nodeComplexity <= MathMLConf.inputNodeComplexityUnificationLimit) {
             if (n.getNodeType() == Node.ELEMENT_NODE) {
                 HashMap<Integer, Node> unifiedMathMLNodes = MathMLUnificator.getUnifiedMathMLNodes(n, false);
@@ -467,7 +459,7 @@ public class MathTokenizer extends Tokenizer {
                 }
             }
         } else {
-            LOG.info("Not unifying node of input complexity " + nodeComplexity + " exceeding set limit " + MathMLConf.inputNodeComplexityUnificationLimit + ".");
+            LOG.info("Not unifying node of input complexity {} exceeding set limit {}.",nodeComplexity,MathMLConf.inputNodeComplexityUnificationLimit);
         }
     }
 
@@ -521,7 +513,7 @@ public class MathTokenizer extends Tokenizer {
         int length = nl.getLength();
         for (int j = 0; j < length; j++) {
             Node n = nl.item(j);
-            result = processAttributesNode(n) == false ? result : true;
+            result = processAttributesNode(n) != false || result;
         }
         if (node.hasAttributes()) {
             NamedNodeMap attrs = node.getAttributes();
@@ -764,7 +756,7 @@ public class MathTokenizer extends Tokenizer {
         if (node instanceof Element) {
             NodeList nl = node.getChildNodes();
             for (int j = 0; j < nl.getLength(); j++) {
-                result = unifyVariablesNode(nl.item(j), changes, keepAlphaEquivalence) == false ? result : true;
+                result = unifyVariablesNode(nl.item(j), changes, keepAlphaEquivalence) || result;
             }
             if (MathMLConstants.PMML_MI.equals(node.getLocalName()) || MathMLConstants.CMML_CI.equals(node.getLocalName())) {
                 String oldVar = node.getTextContent();
@@ -778,7 +770,7 @@ public class MathTokenizer extends Tokenizer {
                             MathMLUnificator.replaceNodeWithUnificator(node);
                             result = true;
                         } catch (Exception ex) {
-                            LOG.warn("Replacing node with unificator failed: " + ex.getMessage(), ex);
+                            LOG.warn("Replacing node with unificator failed: {}",ex.getMessage(), ex);
                         }
                     }
                 }
@@ -847,7 +839,7 @@ public class MathTokenizer extends Tokenizer {
         if (node instanceof Element) {
             NodeList nl = node.getChildNodes();
             for (int j = 0; j < nl.getLength(); j++) {
-                result = unifyConstNode(nl.item(j)) == false ? result : true;
+                result = unifyConstNode(nl.item(j)) || result;
             }
             if (MathMLConstants.PMML_MN.equals(node.getLocalName()) || MathMLConstants.CMML_CN.equals(node.getLocalName())) {
                 node.setTextContent("\u00B6");
@@ -864,7 +856,6 @@ public class MathTokenizer extends Tokenizer {
      *
      * @param rank Specifies how the method should alter modified formulae
      * weight
-     * @return Saying whether or not this formula was modified
      */
     private void unifyOperators(float rank) {
         List<Formula> result = new ArrayList<>();
@@ -904,7 +895,7 @@ public class MathTokenizer extends Tokenizer {
         if (node instanceof Element) {
             NodeList nl = node.getChildNodes();
             for (int j = 0; j < nl.getLength(); j++) {
-                result = unifyOperatorsNode(nl.item(j)) == false ? result : true;
+                result = unifyOperatorsNode(nl.item(j)) || result;
             }
             if (node.getLocalName() != null
                     && node.getLocalName().equals(MathMLConstants.PMML_MO)
@@ -969,8 +960,8 @@ public class MathTokenizer extends Tokenizer {
      * Prints numbers of processed formulae to standard output
      */
     public static void printFormulaeCount() {
-        LOG.info("Input formulae: " + inputF.get());
-        LOG.info("Indexed formulae: " + producedF.get());
+        LOG.info("Input formulae: {}", inputF.get());
+        LOG.info("Indexed formulae: {}", producedF.get());
     }
 
     /**

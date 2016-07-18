@@ -18,11 +18,8 @@ package cz.muni.fi.mias.math;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -105,22 +102,7 @@ public class MathMLConf {
      * for custom ones
      */
     public static Map<String, String> getElementDictionary() {
-        Map<String, String> result = new HashMap<>();
-        BufferedReader br = null;
-        String resource = "element-dictionary";
-        try {
-            br = new BufferedReader(new InputStreamReader(MathMLConf.class.getResourceAsStream(resource)));
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                String[] entry = line.split("=");
-                result.put(entry[0], entry[1]);
-            }
-        } catch (Exception e) {
-            handleError("Cannot load element dictionary file", e);
-        } finally {
-            closeReader(br, resource);
-        }
-        return result;
+        return loadResource("element-dictionary");
     }
 
     /**
@@ -128,22 +110,27 @@ public class MathMLConf {
      * names and their values for custom ones
      */
     public static Map<String, String> getAttrDictionary() {
-        Map<String, String> result = new HashMap<>();
-        BufferedReader br = null;
-        String resource = "attr-dictionary";
-        try {
-            br = new BufferedReader(new InputStreamReader(MathMLConf.class.getResourceAsStream(resource)));
+        return loadResource("attr-dictionary");
+    }
+
+    private static Map<String, String> loadResource(String resourceName) throws MIaSError
+    {
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(MathMLConf.class.getResourceAsStream(resourceName))))
+        {
+            Map<String, String> result = new HashMap<>();
             String line = null;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null)
+            {
                 String[] entry = line.split("=");
                 result.put(entry[0], entry[1]);
             }
-        } catch (Exception e) {
-            handleError("Cannot load attribute dictionary file", e);
-        } finally {
-            closeReader(br, resource);
+
+            return result;
         }
-        return result;
+        catch (IOException e)
+        {
+            throw new MIaSError("Unable to load '"+resourceName+"' resource",e);
+        }
     }
 
     /**
@@ -153,10 +140,8 @@ public class MathMLConf {
      */
     public static Map<String, List<String>> getOperators() {
         Map<String, List<String>> result = new HashMap<>();
-        BufferedReader br = null;
         String resource = "operators";
-        try {
-            br = new BufferedReader(new InputStreamReader(MathMLConf.class.getResourceAsStream(resource)));
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(MathMLConf.class.getResourceAsStream(resource)))) {
             String line = null;
             while ((line = br.readLine()) != null) {
                 String[] op = line.substring(0, line.indexOf(";")).split(",");
@@ -166,13 +151,16 @@ public class MathMLConf {
                     result.put(op1, opsList);
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             handleError("Cannot load operators file", e);
-        } finally {
-            closeReader(br, resource);
         }
         return result;
     }
+
+
+
+
+
 
     public static boolean isIndexableContentElement(String s) {
         return getContentElements().contains(s) && !isOperatorElement(s);
@@ -196,16 +184,6 @@ public class MathMLConf {
 
     public static boolean ignoreNodeAndChildren(String s) {
         return getIgnoreAll().contains(s);
-    }
-
-    private static void closeReader(Reader reader, String fileName) {
-        try {
-            if (reader != null) {
-                reader.close();
-            }
-        } catch (IOException e) {
-            handleError("Cannot close " + fileName + " file", e);
-        }
     }
 
     private static void handleError(String msg, Exception e) throws MIaSError {

@@ -15,14 +15,18 @@
  */
 package cz.muni.fi.mias;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+
 
 /**
  * Utilities class.
@@ -43,7 +47,7 @@ public class MIaSMathUtils {
             @Override
             public InputSource resolveEntity(String publicId, String systemId)
                     throws SAXException, java.io.IOException {
-                LOG.debug("{0} {1}", new Object[]{publicId, systemId});
+                LOG.debug("{} {}", new Object[]{publicId, systemId});
                 if (systemId.endsWith("dtd")) {
                     return new InputSource(MIaSMathUtils.class.getResourceAsStream(MATHML_DTD));
                 } else {

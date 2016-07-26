@@ -80,11 +80,13 @@ import="cz.muni.fi.webmias.Indexes"
                                 </div>
                                 <div>
                                     Extract subformulae:
-                                    <input type="checkbox" id="extractSubformulae" name="extractSubformulae" value="true" <c:if test="${extractSubformulae eq true}">checked="checked"</c:if> />
+                                    <!-- Forbid extraction of subformulae -->
+                                    <input type="checkbox" id="extractSubformulae" name="extractSubformulae" value="true" readonly="readonly" onclick="return false" />
                                 </div>
                                 <div>
                                     Reduce weights of derived formulae:
-                                    <input type="checkbox" id="reduceWeighting" name="reduceWeighting" value="true" <c:if test="${reduceWeighting eq true}">checked="checked"</c:if> />
+                                    <!-- Force reduced weighting -->
+                                    <input type="checkbox" id="reduceWeighting" name="reduceWeighting" value="true" readonly="readonly" onclick="return false" checked="checked" />
                                 </div>
                             </div>
                         </div>

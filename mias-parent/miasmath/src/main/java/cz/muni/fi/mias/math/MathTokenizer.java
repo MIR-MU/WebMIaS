@@ -281,10 +281,8 @@ public class MathTokenizer extends Tokenizer {
                 order();
                 modify();
                 //printMap(formulae);
-                if (subformulae) {
-                    for (List<Formula> forms : formulae.values()) {
-                        producedF.addAndGet(forms.size());
-                    }
+                for (List<Formula> forms : formulae.values()) {
+                    producedF.addAndGet(forms.size());
                 }
             }
 

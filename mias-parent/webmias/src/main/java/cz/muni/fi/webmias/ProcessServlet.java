@@ -124,6 +124,7 @@ public class ProcessServlet extends HttpServlet {
             request.setAttribute("total", searchResult.getTotalResults());
             request.setAttribute("coreTime", searchResult.getCoreSearchTime());
             request.setAttribute("totalTime", searchResult.getTotalSearchTime());
+            request.setAttribute("resPerPage", resPerPage);
             totalResults = Math.min(totalResults, Settings.getMaxResults());
             if (totalResults > 0 && page >= 0) {
                 List<Integer> pages = new ArrayList<>();

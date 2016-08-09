@@ -124,8 +124,7 @@ import="cz.muni.fi.webmias.Indexes"
                         Total searching time: <c:out value="${totalTime} ms"/>
                     </c:if>
                     <c:if test="${!empty results}">
-                        <span class="info small">Total hits: ${total}, showing ${n*30+1}-<c:if test="${total<n*30+30}">${total}</c:if>
-                            <c:if test="${total>30 && total>n*30+30}"><c:out value="${n*30+30}" /></c:if>.                            
+                        <span class="info small">Total hits: ${total}, showing ${n*resPerPage+1}–<c:if test="${total<n*resPerPage+resPerPage}">${total}</c:if><c:if test="${total>resPerPage && total>n*resPerPage+resPerPage}"><c:out value="${n*resPerPage+resPerPage}" /></c:if>.
                             Core searching time: <c:out value="${coreTime} ms"/>
                             Total searching time: <c:out value="${totalTime} ms"/></span>
                             <c:forEach items="${results}" var="res">

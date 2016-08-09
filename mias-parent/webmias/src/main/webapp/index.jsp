@@ -29,8 +29,8 @@ import="cz.muni.fi.webmias.Indexes"
                 <a id="logo" href="${pageContext.request.contextPath}/" />
 
                 <form action="${pageContext.request.contextPath}/ps" method="post"
-                      onsubmit="buildQuery();
-                              return checkForm(this)">
+                      onsubmit="buildQuery(); return checkForm(this)"
+                      class="nolinkhighlighting">
                     <div class="query-clauses">
                         <div class="operator">
                             Match
@@ -150,6 +150,7 @@ import="cz.muni.fi.webmias.Indexes"
                                 <a class="cached-file" target="_blank" data-url="${res.id}" data-href="<c:if test="${forbidden}">forbidden.jsp</c:if><c:if test="${!forbidden}">cached?index=${index}&amp;path=${res.id}</c:if>">cached XHTML</a>
                                 </div>
                         </c:forEach>
+                        <div class="nolinkhighlighting">
                         <c:if test="${n - 4 ge 1}">
                             <form action="${pageContext.request.contextPath}/ps" method="post" style="display: inline">
                                 <a href="#1" onclick="$(this).closest('form').submit(); return false;">1</a>
@@ -209,6 +210,7 @@ import="cz.muni.fi.webmias.Indexes"
                                 </c:if>
                             </form>
                         </c:if>
+                        </div>
                     </c:if>
                 </div>
             </div>

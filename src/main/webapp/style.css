@@ -169,3 +169,7 @@ input[name=searchButton]:hover {
 .examples .example-query-string {
     display: none;
 }
+
+.nolinkhighlighting a {
+    color: inherit;
+}

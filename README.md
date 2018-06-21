@@ -1,5 +1,8 @@
 WebMIaS
 =======
+[![CircleCI](https://circleci.com/gh/MIR-MU/WebMIaS/tree/master.svg?style=shield)][ci]
+
+ [ci]: https://circleci.com/gh/MIR-MU/WebMIaS/tree/master (CircleCI)
 
 ## Configuration
 

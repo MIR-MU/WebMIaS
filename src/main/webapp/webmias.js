@@ -12,8 +12,6 @@ $(document).ready(function() {
     });
     $("#mathQuery").tooltip({position: { my: "left-100 center", at: "right center" }});
     createTextQueryTooltip();
-    
-    bindCachedDocumentLinks();
 });
 
 function createTextQueryTooltip() {    
@@ -164,20 +162,6 @@ function replaceTag(tag) {
 
 function safe_tags_replace(str) {
     return str.replace(/[&<>]/g, replaceTag);
-}
-
-function bindCachedDocumentLinks() {
-    console.log('bindCachedDocumentLinks');
-    var index = $('select[name=index] option[selected=selected]').attr('value');
-    $('.cached-file').click(function() {
-        getCachedDocument($(this).attr('data-url'), index);
-    });
-}
-
-function getCachedDocument(path, index) {
-    $.get('cached', {'path': path, 'index': index}, function(response) {
-        writeConsole(response);
-    });
 }
 
 function writeConsole(content) {

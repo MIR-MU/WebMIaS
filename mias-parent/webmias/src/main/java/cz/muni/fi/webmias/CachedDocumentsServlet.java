@@ -62,9 +62,8 @@ public class CachedDocumentsServlet extends HttpServlet {
         String fileName = getFileName(localPath);
 
         try (ServletOutputStream outStream = response.getOutputStream()) {
-            String mimetype = "application/octet-stream";
+            String mimetype = "application/xhtml+xml";
 
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
             response.setContentType(mimetype);
 
             byte[] byteBuffer = new byte[BUFSIZE];

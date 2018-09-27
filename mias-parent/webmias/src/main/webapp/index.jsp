@@ -129,7 +129,7 @@ import="cz.muni.fi.webmias.Indexes"
                             Total searching time: <c:out value="${totalTime} ms"/></span>
                             <c:forEach items="${results}" var="res">
                             <div class="result">
-                                <a class="title" href="<c:if test="${forbidden}">forbidden.jsp</c:if><c:if test="${!forbidden}">${res.id}</c:if>" onclick="GO">
+                                <a class="title" href="<c:if test="${forbidden}">forbidden.jsp</c:if><c:if test="${!forbidden}">cached?index=${index}&amp;path=${res.id}</c:if>" onclick="GO">
                                     <c:out value="${res.title}" />
                                 </a>
                                 <div class="snippet">
@@ -146,8 +146,7 @@ import="cz.muni.fi.webmias.Indexes"
                                     <c:if test="${fn:startsWith(res.id, 'http')}">
                                         </a>
                                     </c:if>
-                                </span> -
-                                <a class="cached-file" target="_blank" data-url="${res.id}" data-href="<c:if test="${forbidden}">forbidden.jsp</c:if><c:if test="${!forbidden}">cached?index=${index}&amp;path=${res.id}</c:if>">cached XHTML</a>
+                                </span>
                                 </div>
                         </c:forEach>
                         <div class="nolinkhighlighting">

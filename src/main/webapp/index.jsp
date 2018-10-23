@@ -14,7 +14,7 @@ import="cz.muni.fi.webmias.Indexes"
         <link type="text/css" rel="stylesheet" href="style.css" />
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"/>
         <script type="text/javascript" src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"/>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" />
         <script type="text/javascript" src="webmias.js"/>
     </head> 
     <body>

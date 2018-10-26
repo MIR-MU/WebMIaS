@@ -47,12 +47,14 @@ jobs:
           if [[ ! -e MIaSMath ]]; then
             git clone https://github.com/MIR-MU/MIaSMath.git
             pushd MIaSMath
+            git checkout lucene750
             mvn clean install
             popd
           fi
           if [[ ! -e MIaS ]]; then
             git clone https://github.com/MIR-MU/MIaS.git
             pushd MIaS
+            git checkout lucene750
             mvn clean install
             popd
           fi

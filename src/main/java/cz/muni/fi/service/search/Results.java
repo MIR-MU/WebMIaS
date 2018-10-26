@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Results {
 
     private List<Result> result;
-    private int totalResults;
+    private long totalResults;
     private int startIndex;
     private int itemsPerPage;
     private long time;
@@ -71,11 +71,11 @@ public class Results {
         this.result = result;
     }
 
-    public int getTotalResults() {
+    public long getTotalResults() {
         return totalResults;
     }
 
-    public void setTotalResults(int totalResults) {
+    public void setTotalResults(long totalResults) {
         this.totalResults = totalResults;
     }
 

@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +32,8 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.search.spell.PlainTextDictionary;
 import org.apache.lucene.search.suggest.Lookup.LookupResult;
 import org.apache.lucene.search.suggest.analyzing.AnalyzingSuggester;
-import org.apache.lucene.util.Version;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 /**
  * @author Martin Liska
@@ -42,7 +44,10 @@ public class MathNamesSuggester implements Suggester {
 
     public MathNamesSuggester() {
         try {
-            suggester = new AnalyzingSuggester(new StandardAnalyzer(Version.LUCENE_4_10_2));
+            // TODO tempDir set to Tomcat's temp directory
+            Directory tempDir = FSDirectory.open(Paths.get("./temp"));
+            String tempFileNamePrefix = "webmias-lucene-suggester";
+            suggester = new AnalyzingSuggester(tempDir, tempFileNamePrefix, new StandardAnalyzer());
             suggester.build(new PlainTextDictionary(getMathNamesReader()));
         } catch (IOException ex) {
             Logger.getLogger(MathNamesSuggester.class.getName()).log(Level.SEVERE, null, ex);

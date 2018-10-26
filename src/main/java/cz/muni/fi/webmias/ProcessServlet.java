@@ -118,7 +118,7 @@ public class ProcessServlet extends HttpServlet {
             s = new Searching(searcher, currentIndexDef.getStorage());
             page = page == 0 ? page : page - 1;
             SearchResult searchResult = s.search(query, false, page * resPerPage, resPerPage, debug, mmlType, extractSubformulae, reduceWeighting);
-            int totalResults = searchResult.getTotalResults();
+            long totalResults = searchResult.getTotalResults();
             request.setAttribute("processedQuery", searchResult.getProcessedQuery());
             request.setAttribute("luceneQuery", searchResult.getLuceneQuery());
             request.setAttribute("total", searchResult.getTotalResults());

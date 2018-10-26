@@ -19,13 +19,17 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.lucene.search.spell.TermFreqIterator;
 import org.apache.lucene.util.BytesRef;
+import org.apache.lucene.util.BytesRefIterator;
 
 /**
  * @author Martin Liska
  */
-public class TermsListIterator implements TermFreqIterator {
+// TODO the interface TermFreqIterator disappeared without
+// any reference between Lucene 4.10.4 (the latest Lucene 4.x)
+// and Lucene 5.0.0 (the first Lucene 5.x)
+// TODO TermsListIterator not used anywhere since the very first commit?
+public class TermsListIterator implements BytesRefIterator {
 
     private final Iterator<String> iterator;
 
@@ -33,7 +37,7 @@ public class TermsListIterator implements TermFreqIterator {
         this.iterator = titles.iterator();
     }
 
-    @Override
+    // @Override
     public long weight() {
         return 1;
     }
@@ -46,7 +50,7 @@ public class TermsListIterator implements TermFreqIterator {
         return null;
     }
 
-    @Override
+    // @Override
     public Comparator<BytesRef> getComparator() {
         return null;
     }

@@ -16,8 +16,8 @@
 package cz.muni.fi.webmias;
 
 import cz.muni.fi.mias.Settings;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -44,7 +44,7 @@ public class Indexes {
             String[] storageArray = prop.getProperty("STORAGES").split(",");
             for (int i = 0; i < indexesNames.length; i++) {
                 String name = indexesNames[i];
-                IndexSearcher is = new IndexSearcher(DirectoryReader.open(FSDirectory.open(new File(indexesPaths[i]))));
+                IndexSearcher is = new IndexSearcher(DirectoryReader.open(FSDirectory.open(Paths.get(indexesPaths[i]))));
                 String storage = storageArray[i];
                 int sl = storage.length();
                 if (storage.charAt(sl - 1) != dirSep) {

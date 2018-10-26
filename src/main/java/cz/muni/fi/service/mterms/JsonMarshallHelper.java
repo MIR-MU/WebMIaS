@@ -19,11 +19,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Martin Liska
@@ -33,7 +34,7 @@ public class JsonMarshallHelper {
     public static void marshall(Object o, Writer w) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             mapper.writeValue(w, o);
         } catch (JsonGenerationException ex) {
             Logger.getLogger(JsonMarshallHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,7 +48,7 @@ public class JsonMarshallHelper {
     public static Object unmarshall(String s, Class c) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             Object readValue = mapper.readValue(s, c);
             return readValue;
         } catch (JsonParseException ex) {

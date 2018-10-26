@@ -27,10 +27,10 @@
     </servlet>
     <servlet>
         <servlet-name>WsServlet</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>
-                com.sun.jersey.config.property.packages
+                jersey.config.server.provider.packages
             </param-name>
             <param-value>
                 cz.muni.fi.service

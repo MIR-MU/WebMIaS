@@ -25,6 +25,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>MIaS</artifactId>
             <version>${project.version}</version>
+            <type>jar</type>
         </dependency>        
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

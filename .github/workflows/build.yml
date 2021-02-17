@@ -4,6 +4,13 @@ on:
   pull_request:
   workflow_dispatch:
 jobs:
+  Shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ludeeus/action-shellcheck@master
+        env:
+          SHELLCHECK_OPTS: -x
   MathMLCan:
     runs-on: ubuntu-latest
     steps:
@@ -115,3 +122,17 @@ jobs:
       with:
         name: WebMIaS
         path: .
+  docker-build:
+    name: Build Docker image
+    needs: WebMIaS
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: 1.6.6-4.10.4
+    steps:
+    - uses: actions/checkout@v2
+    - run: script/github-configure
+    - uses: actions/download-artifact@v2
+      with:
+        name: WebMIaS
+        path: WebMIaS
+    - run: script/github-build

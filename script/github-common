@@ -7,7 +7,7 @@ set -o xtrace
 
 # Define useful variables
 WAR_FILENAME=WebMIaS/target/WebMIaS-"$IMAGE_TAG"-SNAPSHOT.war
-IMAGE_TAG=miratmu/"$IMAGE_TAG"
+IMAGE_TAG=miratmu/webmias:"$IMAGE_TAG"
 
 set -o nounset
 
@@ -16,12 +16,16 @@ docker_build() {
   docker build --build-arg WAR_FILENAME="$WAR_FILENAME" --compress --no-cache --force-rm --squash -t "$IMAGE_TAG" "$@"
 }
 
+docker_push() {
+  docker push "$IMAGE_TAG"
+}
+
 docker_run() {
   docker run --rm -u "$(id -u)":"$(id -g)" -v "$PWD":/data -w /data "$1" "${@:2}"
 }
 
 mias() {
-  docker_run miratmu/MIaS "$@"
+  docker_run miratmu/mias "$@"
 }
 
 webmias() {

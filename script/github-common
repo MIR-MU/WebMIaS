@@ -6,8 +6,8 @@ set -o pipefail
 set -o xtrace
 
 # Define useful variables
+WAR_FILENAME=WebMIaS/target/WebMIaS-"$IMAGE_TAG"-SNAPSHOT.war
 IMAGE_TAG=miratmu/"$IMAGE_TAG"
-WAR_FILENAME=WebMIaS/target/WebMIaS-"$WEBMIAS_VERSION"-SNAPSHOT.war
 
 set -o nounset
 

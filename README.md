@@ -1,8 +1,8 @@
 WebMIaS – Web interface for [MIaS][]
 ====================================
-[![CircleCI](https://circleci.com/gh/MIR-MU/WebMIaS/tree/master.svg?style=shield)][ci]
+[![ci](https://github.com/MIR-MU/WebMIaS/workflows/Build/badge.svg)][ci]
 
- [ci]: https://circleci.com/gh/MIR-MU/WebMIaS/tree/master (CircleCI)
+ [ci]: https://github.com/MIR-MU/WebMIaS/actions (GitHub Actions)
 
 [WebMIaS][] is a web interface for [MIaS][]. WebMIaS accepts math queries in
 TeX or MathML notation combined with text queries. TeX queries are converted

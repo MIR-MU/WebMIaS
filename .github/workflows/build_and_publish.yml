@@ -123,7 +123,7 @@ jobs:
         name: WebMIaS
         path: .
   docker-build-and-publish:
-    name: Build and publish Docker image
+    name: Build, test, and publish Docker image
     needs: WebMIaS
     runs-on: ubuntu-latest
     env:
@@ -136,6 +136,7 @@ jobs:
         name: WebMIaS
         path: WebMIaS
     - run: script/github-build
+    - run: script/github-test
     - uses: azure/docker-login@v1
       with:
         username: ${{ secrets.DOCKER_HUB_USER }}

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+. script/github-common
+
+# Index the test dataset
+mias test/ index/
+
+# Start WebMIaS
+webmias_start test/ index/
+
+# Try loading results from WebMIaS for a minute
+for ATTEMPT in {0..6}
+do
+  if RESULTS="$(webmias_query)"
+  then
+    RESULTS="$(xmllint -xpath //result/id - <<<"$RESULTS")"
+    if ! [[ "$RESULTS" = '<id>exact-match.xhtml</id>'$'\n''<id>fuzzy-match.xhtml</id>' ]]
+    then
+      echo Unexpected query results: "$RESULTS" 1>&2
+      exit 2
+    fi
+  else
+    if [[ "$ATTEMPT" = 6 ]]
+    then
+      echo WebMIaS deployment timed out 1>&2
+      exit 3
+    else
+      echo WebMIaS has not been deployed yet, backing off
+      sleep 10
+    fi
+  fi
+done
+
+# Stop WebMIaS
+webmias_stop

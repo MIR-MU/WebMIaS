@@ -13,6 +13,37 @@ to MathML on the fly. Results contain match snippets.
 
 Usage
 =====
+[Install Docker][], place your dataset to a directory named `dataset/`, and
+index your dataset using the [miratmu/mias][] Docker image:
+
+```sh
+docker run -v "$PWD"/dataset:/dataset:ro -v "$PWD"/index:/index:rw \
+    --rm miratmu/mias
+```
+
+Next, deploy the [miratmu/webmias][] Docker image:
+
+```sh
+docker run -v "$PWD"/dataset:/dataset:ro -v "$PWD"/index:/index:ro \
+    --rm --name webmias -d -p 127.0.0.1:8888:8080 miratmu/webmias
+```
+
+Navigate to <http://localhost:8888/WebMIaS> with your web browser.
+If you would like to expose WebMIaS to others in your computer network,
+replace the IP address 127.0.0.1 with the IP address 0.0.0.0:
+
+```sh
+docker stop webmias
+docker run -v "$PWD"/dataset:/dataset:ro -v "$PWD"/index:/index:ro \
+    --rm --name webmias -d -p 0.0.0.0:8888:8080 miratmu/webmias
+```
+
+ [install docker]: https://docs.docker.com/get-docker/
+ [miratmu/mias]: https://hub.docker.com/r/miratmu/mias/tags
+ [miratmu/webmias]: https://hub.docker.com/r/miratmu/webmias/tags
+
+Usage without Docker
+====================
 Setting up `indexes.properties`
 -------------------------------
 Locate the file named `indexes.properties` in the

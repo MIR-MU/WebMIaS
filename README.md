@@ -21,12 +21,20 @@ docker run -v "$PWD"/dataset:/dataset:ro -v "$PWD"/index:/index:rw \
     --rm miratmu/mias
 ```
 
+When running MIaS, you may control the configuration of the Java Virtual
+Machine by changing the `JAVA_OPTS` environmental veriable:
+`-e JAVA_OPTS='-Xms128g -Xmx192g'`.
+
 Next, deploy the [miratmu/webmias][] Docker image:
 
 ```sh
 docker run -v "$PWD"/dataset:/dataset:ro -v "$PWD"/index:/index:ro \
     --rm --name webmias -d -p 127.0.0.1:8888:8080 miratmu/webmias
 ```
+
+When running WebMIaS, you may also control the configuration of the Java
+Virtual Machine by changing the `JAVA_OPTS` environmental veriable:
+`-e JAVA_OPTS='-Xms128g -Xmx192g'`.
 
 Navigate to <http://localhost:8888/WebMIaS> with your web browser.
 If you would like to expose WebMIaS to others in your computer network,

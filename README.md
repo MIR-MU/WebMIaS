@@ -97,7 +97,7 @@ BibTeX
 ------
 ``` bib
 @inproceedings{dml:702604,
-     author = "Martin L\'{\i}\v{s}ka and Petr Sojka
+     author = "Martin L\'{i}\v{s}ka and Petr Sojka
                and Michal R\r{u}\v{z}i\v{c}ka and Petr Mravec",
       title = "{Web Interface and Collection for Mathematical Retrieval:
                 WebMIaS and MREC}",
